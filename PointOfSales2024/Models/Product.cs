@@ -1,4 +1,6 @@
-﻿namespace PointOfSales2024.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PointOfSales2024.Models;
 
 public class Product
 {
@@ -11,6 +13,8 @@ public class Product
     public int Quantity { get; set; } = 0;
     public double Price { get; set; }
     public double Profit { get; set; }
+
+    //[Column("Added by")]
     public int AppUserId { get; set; }
     public DateTime DateAdded { get; set; } = DateTime.Now;
 

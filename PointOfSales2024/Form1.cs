@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PointOfSales2024.Data;
+using PointOfSales2024.ViewModel;
 
 namespace PointOfSales2024
 {
@@ -11,51 +12,46 @@ namespace PointOfSales2024
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
 
-        }
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            this._dbContext = new PosContext();
+            using (var context = new PosContext())
+            {
+                // Ensure the database is created
+                //context.Database.EnsureCreated();
 
-            // Uncomment the line below to start fresh with a new database.
-            // this.dbContext.Database.EnsureDeleted();
-            this._dbContext.Database.EnsureCreated();
+                // Load the products from the database, including the related AppUser data
+                var products = context.Products
+                    .Include(p => p.AppUser)  // Include related data
+                    .ToList();
 
-            this._dbContext.Products.Load();
+                // Map Product objects to ProductViewModel objects
+                var productViewModels = products.Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    ProductName = p.ProductName,
+                    Quantity = p.Quantity,
+                    Price = p.Price,
+                    AddedBy = p.AppUser.Name,  // Get the name of the associated AppUser
+                    DateAdded = p.DateAdded
 
+                }).ToList();
 
-            this.productBindingSource.DataSource = _dbContext.Products.Local.ToBindingList();
-            // this._dbContext = new PosContext();
-
-            //// Uncomment the line below to start fresh with a new database.
-            //// this.dbContext.Database.EnsureDeleted();
-
-            //this._dbContext.Products.Load();
-
-            //using (var context = new PosContext())
-            //{
-
-            //    context.Database.EnsureCreated();
-            //    context.Database.EnsureDeleted();
-
-            //    context.Products.Load();
-            //    // Load the products from the database
-            //    //var products = context.Products
-            //    //    .Include(x => x.AppUser)
-            //    //   // .ThenInclude(x => x.Name)
-            //    //    //.ThenInclude(x => x.)
-            //    //    .ToList();
-
-            //    // Bind the product data to the BindingSource
-            //    productBindingSource.DataSource = context;
-            //}
-
-            //this.productBindingSource.DataSource = _dbContext.Products.Local.ToBindingList();
+                // Bind the product list to the DataGridView
+                dataGridView1.DataSource = productViewModels;
+                dataGridView1.Columns["AddedBy"].HeaderText = "Added By";
+            }
         }
 
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            using (var context = new PosContext())
+            {
+                context.SaveChanges();
+                dataGridView1.Refresh();
+            }
+        }
     }
 }
