@@ -30,12 +30,10 @@ public class PosContext : DbContext
             Id = 1,
             IsBarcode = true,
             BarcodeNumber = "1234",
-            IsWholeSale = false,
-            wholeSaleQuantity = 0,
             ProductName = "Milo",
             Quantity = 2,
             Price = 5,
-            Profit = 0,
+            //Profit = 0,
             AppUserId = 1,
             DateAdded = DateTime.Now
         },
@@ -44,12 +42,10 @@ public class PosContext : DbContext
               Id = 2,
               IsBarcode = true,
               BarcodeNumber = "123456",
-              IsWholeSale = false,
-              wholeSaleQuantity = 0,
               ProductName = "Nido",
               Quantity = 5,
               Price = 10,
-              Profit = 2,
+              //Profit = 2,
               AppUserId = 1,
               DateAdded = DateTime.Now
           });
