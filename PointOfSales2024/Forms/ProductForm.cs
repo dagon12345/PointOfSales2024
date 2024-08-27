@@ -5,6 +5,7 @@ using PointOfSales2024.ViewModel;
 using Syncfusion.WinForms.DataGrid;
 using Syncfusion.WinForms.DataGrid.Enums;
 using Syncfusion.WinForms.DataGrid.Interactivity;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -30,7 +31,7 @@ namespace PointOfSales2024
             using (var context = new PosContext())
             {
                 // Ensure the database is created
-                // await context.Database.EnsureDeletedAsync();
+                //await context.Database.EnsureDeletedAsync();
                 await context.Database.EnsureCreatedAsync();
 
 
@@ -64,14 +65,14 @@ namespace PointOfSales2024
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            if (txt_productName.Text == null)
+            if (txt_productName.Text == "")
             {
                 MessageBox.Show("Please fill all the fields");
                 return;
             }
 
 
-            if (_product == null)
+            try
             {
                 // Create a new Product if _product is not initialized
                 _product = new Product
@@ -88,21 +89,17 @@ namespace PointOfSales2024
 
                 _dbContext.Products.Add(_product); // Add the new product to the context
                 _dbContext.SaveChanges(); // Save changes to the database
-
+                                          // Optionally refresh the DataGridView
+                OnLoad(EventArgs.Empty);
+                ClearFields();
+                MessageBox.Show("Product saved successfully.");
             }
-            //else if(_product != null)
-            //{
-            //    MessageBox.Show("Product already exist.");
-            //    return;
-            //}    
-         
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
 
-
-            // Optionally refresh the DataGridView
-            OnLoad(EventArgs.Empty);
-            ClearFields();
-            MessageBox.Show("Product saved successfully.");
         }
 
 
@@ -130,6 +127,13 @@ namespace PointOfSales2024
                 MessageBox.Show("Empty table.");
                 return;
             }
+            if (txt_productName.Text == "")
+            {
+                MessageBox.Show("Please fill all the fields");
+                return;
+            }
+
+
             if (MessageBox.Show("Are you sure you want to delete this record ?", "Delete ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
 
@@ -151,6 +155,7 @@ namespace PointOfSales2024
                 MessageBox.Show("Empty table.");
                 return;
             }
+
 
             int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
             _product = _dbContext.Products
@@ -185,6 +190,12 @@ namespace PointOfSales2024
                 MessageBox.Show("Empty table.");
                 return;
             }
+            if (txt_productName.Text == "")
+            {
+                MessageBox.Show("Select what you want to update");
+                return;
+            }
+
 
             int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
             var product = _dbContext.Products.First(a => a.Id == selectedProductId);
@@ -206,6 +217,18 @@ namespace PointOfSales2024
             ClearFields();
             MessageBox.Show("Record updated Successfully");
 
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            var textfilter = txt_search.Text.ToLower();
+            // Assuming Products is a DbSet in your _dbContext and you're using DataGridView named dgvProducts
+            var filteredProducts = _dbContext.Products
+                                             .Where(s => s.ProductName.ToLower().Contains(textfilter) || s.BarcodeNumber.ToLower().Contains(textfilter))
+                                             .ToList();
+
+            // Bind filtered data to DataGridView
+            dataGridView1.DataSource = filteredProducts;
         }
     }
 }
