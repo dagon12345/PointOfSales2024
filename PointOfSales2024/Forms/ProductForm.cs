@@ -2,13 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using PointOfSales2024.Data;
 using PointOfSales2024.Models;
 using PointOfSales2024.ViewModel;
-using Syncfusion.WinForms.DataGrid;
-using Syncfusion.WinForms.DataGrid.Enums;
-using Syncfusion.WinForms.DataGrid.Interactivity;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PointOfSales2024
 {
@@ -16,12 +11,16 @@ namespace PointOfSales2024
     {
         private PosContext _dbContext;
         private Product? _product;
+        private ProductViewModel _productViewModel;
         public ProductForm()
         {
             InitializeComponent();
             txt_barcodenumber.Focus();
         }
 
+
+
+        //private BindingList<ProductViewModel> list = new BindingList<ProductViewModel>();
 
         protected override async void OnLoad(EventArgs e)
         {
@@ -58,13 +57,16 @@ namespace PointOfSales2024
                 }).ToList();
 
                 // Bind the product list to the DataGridView
-                dataGridView1.DataSource = productViewModels;
-                //dataGridView1.DataSource = productViewModelBindingSource;
+                productViewModelBindingSource.DataSource = productViewModels;
+                dataGridView1.DataSource = productViewModelBindingSource;
             }
         }
 
+
         private void btn_save_Click(object sender, EventArgs e)
         {
+            /*Instead of getting data from database, we used the refresh grid same reflected as what we've added 
+             into our database.*/
             if (txt_productName.Text == "")
             {
                 MessageBox.Show("Please fill all the fields");
@@ -72,32 +74,38 @@ namespace PointOfSales2024
             }
 
 
-            try
+            _product = new Product
             {
-                // Create a new Product if _product is not initialized
-                _product = new Product
-                {
-                    IsBarcode = check_barcode.Checked,
-                    BarcodeNumber = txt_barcodenumber.Text,
-                    ProductName = txt_productName.Text,
-                    Quantity = Convert.ToInt32(txt_quantity.Text),
-                    Price = Convert.ToDouble(txt_price.Text),
-                    //Profit = Convert.ToDouble(txt_profit.Text),
-                    AppUserId = 1, // or get this dynamically
-                    DateAdded = DateTime.Now
-                };
+                IsBarcode = check_barcode.Checked,
+                BarcodeNumber = txt_barcodenumber.Text,
+                ProductName = txt_productName.Text,
+                Quantity = Convert.ToInt32(txt_quantity.Text),
+                Price = Convert.ToDouble(txt_price.Text),
+                //Profit = Convert.ToDouble(txt_profit.Text),
+                AppUserId = 1, // or get this dynamically
+                DateAdded = DateTime.Now
+            };
 
-                _dbContext.Products.Add(_product); // Add the new product to the context
-                _dbContext.SaveChanges(); // Save changes to the database
-                                          // Optionally refresh the DataGridView
-                OnLoad(EventArgs.Empty);
-                ClearFields();
-                MessageBox.Show("Product saved successfully.");
-            }
-            catch (Exception ex)
+            _dbContext.Products.Add(_product); // Add the new product to the context
+            _dbContext.SaveChanges(); // Save changes to the database
+
+
+            // Add the new product to the BindingSource
+            var newProductViewModel = new ProductViewModel
             {
-                MessageBox.Show(ex.Message);
-            }
+                Id = _product.Id,
+                IsBarcode = _product.IsBarcode,
+                BarcodeNumber = _product.BarcodeNumber,
+                ProductName = _product.ProductName,
+                Quantity = _product.Quantity,
+                Price = _product.Price,
+                AddedBy = "User Name",  // replace with actual user name
+                DateAdded = _product.DateAdded
+            };
+
+            productViewModelBindingSource.Add(newProductViewModel);
+            MessageBox.Show("Product saved successfully.");
+
 
 
         }
@@ -137,13 +145,22 @@ namespace PointOfSales2024
             if (MessageBox.Show("Are you sure you want to delete this record ?", "Delete ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
 
-                int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-                _dbContext.Remove(_dbContext.Products.Single(x => x.Id == selectedProductId));
-                _dbContext.SaveChanges();
-                // Optionally refresh the DataGridView
-                OnLoad(EventArgs.Empty);
-                ClearFields();
-                MessageBox.Show("Record Deleted Successfully");
+
+                var selectedProduct = productViewModelBindingSource.Current as ProductViewModel;
+
+                if (selectedProduct != null)
+                {
+                    // Delete the product from the database
+                    var productToDelete = _dbContext.Products.Find(selectedProduct.Id);
+                    _dbContext.Products.Remove(productToDelete);
+                    _dbContext.SaveChanges();
+
+                    // Remove the product from the BindingSource
+                    productViewModelBindingSource.Remove(selectedProduct);
+                    ClearFields();
+                    MessageBox.Show("Product deleted successfully.");
+                }
+
             }
         }
 
@@ -197,38 +214,61 @@ namespace PointOfSales2024
             }
 
 
-            int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-            var product = _dbContext.Products.First(a => a.Id == selectedProductId);
+            var selectedProduct = productViewModelBindingSource.Current as ProductViewModel;
 
-            // Update existing product
+            if (selectedProduct != null)
+            {
+                // Update the product in the database
+                var productToUpdate = _dbContext.Products.Find(selectedProduct.Id);
+                productToUpdate.ProductName = txt_productName.Text;
+                productToUpdate.Quantity = Convert.ToInt32(txt_quantity.Text);
+                productToUpdate.Price = Convert.ToDouble(txt_price.Text);
 
-            product.IsBarcode = check_barcode.Checked;
-            product.BarcodeNumber = txt_barcodenumber.Text;
-            product.ProductName = txt_productName.Text;
-            product.Quantity = Convert.ToInt32(txt_quantity.Text);
-            product.Price = Convert.ToDouble(txt_price.Text);
-            // _product.Profit = Convert.ToDouble(txt_profit.Text);
-            product.AppUserId = 1;
-            product.DateAdded = DateTime.Now;
+                _dbContext.SaveChanges();
 
-            _dbContext.Products.Update(product); // Mark the product as updated
-            _dbContext.SaveChanges();
-            OnLoad(EventArgs.Empty);
-            ClearFields();
-            MessageBox.Show("Record updated Successfully");
+                // Update the BindingSource
+                selectedProduct.ProductName = productToUpdate.ProductName;
+                selectedProduct.Quantity = productToUpdate.Quantity;
+                selectedProduct.Price = productToUpdate.Price;
+
+                productViewModelBindingSource.ResetCurrentItem(); // Refresh the grid
+                ClearFields();
+                MessageBox.Show("Record updated Successfully");
+            }
+
 
         }
 
         private void txt_search_TextChanged(object sender, EventArgs e)
         {
-            var textfilter = txt_search.Text.ToLower();
-            // Assuming Products is a DbSet in your _dbContext and you're using DataGridView named dgvProducts
+            var textFilter = txt_search.Text.ToLower();
+
+            // Filter products from the database
             var filteredProducts = _dbContext.Products
-                                             .Where(s => s.ProductName.ToLower().Contains(textfilter) || s.BarcodeNumber.ToLower().Contains(textfilter))
+                                             .Where(s => s.ProductName.ToLower().Contains(textFilter) || s.BarcodeNumber.ToLower().Contains(textFilter))
+                                             .Include(p => p.AppUser) // Include related data if needed
+                                             .AsNoTracking()
                                              .ToList();
 
-            // Bind filtered data to DataGridView
-            dataGridView1.DataSource = filteredProducts;
+            // Map Product objects to ProductViewModel objects
+            var filteredProductViewModels = filteredProducts.Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                IsBarcode = p.IsBarcode,
+                BarcodeNumber = p.BarcodeNumber,
+                ProductName = p.ProductName,
+                Quantity = p.Quantity,
+                Price = p.Price,
+                AddedBy = p.AppUser.Name,  // Get the name of the associated AppUser
+                DateAdded = p.DateAdded
+            }).ToList();
+
+            // Clear the current binding source and add the filtered data
+            productViewModelBindingSource.Clear();
+            foreach (var productViewModel in filteredProductViewModels)
+            {
+                productViewModelBindingSource.Add(productViewModel);
+            }
         }
     }
 }
