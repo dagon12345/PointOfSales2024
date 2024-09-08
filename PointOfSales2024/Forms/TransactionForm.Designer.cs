@@ -39,6 +39,9 @@
             label4 = new Label();
             txtOverallTotal = new TextBox();
             groupBox2 = new GroupBox();
+            lblNotification = new Label();
+            label9 = new Label();
+            lblProductId = new Label();
             txtProductName = new TextBox();
             label5 = new Label();
             txtPrice = new TextBox();
@@ -55,14 +58,17 @@
             productBindingSource2 = new BindingSource(components);
             productBindingSource3 = new BindingSource(components);
             groupBox3 = new GroupBox();
+            btnVoid = new Button();
             dataGridView1 = new DataGridView();
-            barcodeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            productNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            quantityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            priceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            OverallPrice = new DataGridViewTextBoxColumn();
             orderViewModelBindingSource = new BindingSource(components);
             groupBox4 = new GroupBox();
+            Id = new DataGridViewTextBoxColumn();
+            ProductId = new DataGridViewTextBoxColumn();
+            barcodeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            productNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            Quantity = new DataGridViewTextBoxColumn();
+            priceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            OverallPrice = new DataGridViewTextBoxColumn();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
@@ -87,13 +93,14 @@
             groupBox1.Controls.Add(txtOverallTotal);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(332, 427);
+            groupBox1.Size = new Size(438, 427);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             // 
             // btnTransact
             // 
-            btnTransact.Location = new Point(7, 278);
+            btnTransact.Cursor = Cursors.Hand;
+            btnTransact.Location = new Point(56, 315);
             btnTransact.Name = "btnTransact";
             btnTransact.Size = new Size(317, 29);
             btnTransact.TabIndex = 22;
@@ -105,7 +112,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(6, 186);
+            label8.Location = new Point(5, 224);
             label8.Name = "label8";
             label8.Size = new Size(54, 17);
             label8.TabIndex = 22;
@@ -114,10 +121,10 @@
             // txtChange
             // 
             txtChange.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtChange.Location = new Point(7, 211);
+            txtChange.Location = new Point(6, 249);
             txtChange.Name = "txtChange";
             txtChange.ReadOnly = true;
-            txtChange.Size = new Size(319, 43);
+            txtChange.Size = new Size(413, 43);
             txtChange.TabIndex = 22;
             txtChange.Text = "0.0";
             // 
@@ -125,7 +132,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(6, 100);
+            label7.Location = new Point(5, 124);
             label7.Name = "label7";
             label7.Size = new Size(90, 17);
             label7.TabIndex = 20;
@@ -134,11 +141,12 @@
             // txtCash
             // 
             txtCash.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtCash.Location = new Point(7, 125);
+            txtCash.Location = new Point(6, 149);
             txtCash.Name = "txtCash";
-            txtCash.Size = new Size(319, 43);
+            txtCash.Size = new Size(413, 43);
             txtCash.TabIndex = 21;
             txtCash.Text = "0.0";
+            txtCash.TextChanged += txtCash_TextChanged;
             txtCash.KeyDown += txtCash_KeyDown;
             txtCash.KeyPress += txtCash_KeyPress;
             txtCash.KeyUp += txtCash_KeyUp;
@@ -156,11 +164,11 @@
             // 
             // txtOverallTotal
             // 
-            txtOverallTotal.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtOverallTotal.Font = new Font("Segoe UI Black", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtOverallTotal.Location = new Point(7, 44);
             txtOverallTotal.Name = "txtOverallTotal";
             txtOverallTotal.ReadOnly = true;
-            txtOverallTotal.Size = new Size(319, 43);
+            txtOverallTotal.Size = new Size(412, 55);
             txtOverallTotal.TabIndex = 17;
             txtOverallTotal.Text = "0.0";
             txtOverallTotal.KeyUp += txtOverallTotal_KeyUp;
@@ -168,6 +176,9 @@
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox2.Controls.Add(lblNotification);
+            groupBox2.Controls.Add(label9);
+            groupBox2.Controls.Add(lblProductId);
             groupBox2.Controls.Add(txtProductName);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(txtPrice);
@@ -176,9 +187,39 @@
             groupBox2.Controls.Add(txtBarcode);
             groupBox2.Location = new Point(12, 445);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(911, 86);
+            groupBox2.Size = new Size(911, 95);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
+            // 
+            // lblNotification
+            // 
+            lblNotification.AutoSize = true;
+            lblNotification.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblNotification.Location = new Point(7, 76);
+            lblNotification.Name = "lblNotification";
+            lblNotification.Size = new Size(68, 13);
+            lblNotification.TabIndex = 22;
+            lblNotification.Text = "Notification";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(709, 25);
+            label9.Name = "label9";
+            label9.Size = new Size(68, 17);
+            label9.TabIndex = 21;
+            label9.Text = "ProductId";
+            // 
+            // lblProductId
+            // 
+            lblProductId.AutoSize = true;
+            lblProductId.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblProductId.Location = new Point(709, 46);
+            lblProductId.Name = "lblProductId";
+            lblProductId.Size = new Size(23, 25);
+            lblProductId.TabIndex = 20;
+            lblProductId.Text = "0";
             // 
             // txtProductName
             // 
@@ -244,6 +285,7 @@
             // 
             // btnEnter
             // 
+            btnEnter.Cursor = Cursors.Hand;
             btnEnter.Location = new Point(468, 39);
             btnEnter.Name = "btnEnter";
             btnEnter.Size = new Size(224, 29);
@@ -316,12 +358,25 @@
             // groupBox3
             // 
             groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox3.Controls.Add(btnVoid);
             groupBox3.Controls.Add(dataGridView1);
-            groupBox3.Location = new Point(350, 12);
+            groupBox3.Location = new Point(456, 12);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(573, 427);
+            groupBox3.Size = new Size(467, 427);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
+            // 
+            // btnVoid
+            // 
+            btnVoid.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVoid.Cursor = Cursors.Hand;
+            btnVoid.Location = new Point(7, 385);
+            btnVoid.Name = "btnVoid";
+            btnVoid.Size = new Size(149, 29);
+            btnVoid.TabIndex = 22;
+            btnVoid.Text = "Void Selected";
+            btnVoid.UseVisualStyleBackColor = true;
+            btnVoid.Click += btnVoid_Click;
             // 
             // dataGridView1
             // 
@@ -330,62 +385,14 @@
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { barcodeDataGridViewTextBoxColumn, productNameDataGridViewTextBoxColumn, quantityDataGridViewTextBoxColumn, priceDataGridViewTextBoxColumn, OverallPrice });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, ProductId, barcodeDataGridViewTextBoxColumn, productNameDataGridViewTextBoxColumn, Quantity, priceDataGridViewTextBoxColumn, OverallPrice });
             dataGridView1.DataSource = orderViewModelBindingSource;
             dataGridView1.Location = new Point(7, 14);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(560, 407);
+            dataGridView1.Size = new Size(454, 365);
             dataGridView1.TabIndex = 0;
-            // 
-            // barcodeDataGridViewTextBoxColumn
-            // 
-            barcodeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            barcodeDataGridViewTextBoxColumn.DataPropertyName = "Barcode";
-            barcodeDataGridViewTextBoxColumn.HeaderText = "Barcode";
-            barcodeDataGridViewTextBoxColumn.Name = "barcodeDataGridViewTextBoxColumn";
-            barcodeDataGridViewTextBoxColumn.ReadOnly = true;
-            barcodeDataGridViewTextBoxColumn.Width = 75;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            productNameDataGridViewTextBoxColumn.HeaderText = "ProductName";
-            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            productNameDataGridViewTextBoxColumn.ReadOnly = true;
-            productNameDataGridViewTextBoxColumn.Width = 106;
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            quantityDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
-            quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            quantityDataGridViewTextBoxColumn.ReadOnly = true;
-            quantityDataGridViewTextBoxColumn.Width = 78;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            priceDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            priceDataGridViewTextBoxColumn.HeaderText = "Price";
-            priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            priceDataGridViewTextBoxColumn.ReadOnly = true;
-            priceDataGridViewTextBoxColumn.Width = 58;
-            // 
-            // OverallPrice
-            // 
-            OverallPrice.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            OverallPrice.DataPropertyName = "OverallPrice";
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            OverallPrice.DefaultCellStyle = dataGridViewCellStyle1;
-            OverallPrice.HeaderText = "OverallPrice";
-            OverallPrice.Name = "OverallPrice";
-            OverallPrice.ReadOnly = true;
-            OverallPrice.Width = 95;
             // 
             // orderViewModelBindingSource
             // 
@@ -404,6 +411,66 @@
             groupBox4.Size = new Size(911, 83);
             groupBox4.TabIndex = 22;
             groupBox4.TabStop = false;
+            // 
+            // Id
+            // 
+            Id.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // ProductId
+            // 
+            ProductId.DataPropertyName = "ProductId";
+            ProductId.HeaderText = "ProductId";
+            ProductId.Name = "ProductId";
+            ProductId.ReadOnly = true;
+            ProductId.Visible = false;
+            // 
+            // barcodeDataGridViewTextBoxColumn
+            // 
+            barcodeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            barcodeDataGridViewTextBoxColumn.DataPropertyName = "Barcode";
+            barcodeDataGridViewTextBoxColumn.HeaderText = "Barcode";
+            barcodeDataGridViewTextBoxColumn.Name = "barcodeDataGridViewTextBoxColumn";
+            barcodeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            productNameDataGridViewTextBoxColumn.HeaderText = "ProductName";
+            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Quantity
+            // 
+            Quantity.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Quantity.DataPropertyName = "Quantity";
+            Quantity.HeaderText = "Quantity";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            priceDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            priceDataGridViewTextBoxColumn.HeaderText = "Price";
+            priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            priceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // OverallPrice
+            // 
+            OverallPrice.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            OverallPrice.DataPropertyName = "OverallPrice";
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            OverallPrice.DefaultCellStyle = dataGridViewCellStyle1;
+            OverallPrice.HeaderText = "OverallPrice";
+            OverallPrice.Name = "OverallPrice";
+            OverallPrice.ReadOnly = true;
             // 
             // TransactionForm
             // 
@@ -459,11 +526,6 @@
         private BindingSource productBindingSource;
         private BindingSource productBindingSource1;
         private BindingSource productBindingSource2;
-        private DataGridViewTextBoxColumn barcodeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn OverallPrice;
         private BindingSource productBindingSource3;
         private GroupBox groupBox4;
         private Label label8;
@@ -472,5 +534,16 @@
         private TextBox txtCash;
         private Button btnTransact;
         private TextBox txtProductName;
+        private Label lblProductId;
+        private Label label9;
+        private Label lblNotification;
+        private Button btnVoid;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn ProductId;
+        private DataGridViewTextBoxColumn barcodeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn Quantity;
+        private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn OverallPrice;
     }
 }

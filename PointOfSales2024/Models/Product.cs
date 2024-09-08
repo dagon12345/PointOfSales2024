@@ -22,6 +22,9 @@ public class Product
     public int AppUserId { get; set; }
     public DateTime DateAdded { get; set; } = DateTime.Now;
 
-    public AppUser AppUser { get; set; } = null!; // Required reference navigation to princial AppUser.
+    public AppUser AppUser { get; set; } = null!;// Required reference navigation to princial AppUser.
+    public ICollection<Order> Orders { get; } = new List<Order>();
+    /* Entity Product hasmany orders with one product has foreign key Id*/
+   // public Order Order { get; set; } = null!;
 }
 

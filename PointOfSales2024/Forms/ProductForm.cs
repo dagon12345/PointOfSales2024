@@ -29,10 +29,10 @@ namespace PointOfSales2024
 
             using (var context = new PosContext())
             {
-                // Ensure the database is created
-                //await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
 
+                // Ensure the database is created
+                // await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
 
                 // Load the products from the database, including the related AppUser data
                 var products = await _dbContext.Products
@@ -122,7 +122,7 @@ namespace PointOfSales2024
             dataGridView1.ClearSelection();
             txt_barcodenumber.Enabled = true;
             check_barcode.Checked = true;
-
+            lblProductId.Text = "0";
             check_barcode.Checked = true;
             txt_barcodenumber.Clear();
             txt_productName.Clear();
@@ -130,8 +130,8 @@ namespace PointOfSales2024
             txt_price.Clear();
             txt_price.Clear();
             txt_barcodenumber.Focus();
-            btn_save.Text = "Save";
-         
+            //btn_save.Text = "Save";
+
 
 
         }
@@ -181,15 +181,17 @@ namespace PointOfSales2024
             }
 
 
-            int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+           int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+     
             _product = _dbContext.Products
                 .Include(p => p.AppUser) // Include related data if needed
                 .FirstOrDefault(x => x.Id == selectedProductId);
             // Populate the form controls with the product details
+
+
+            lblProductId.Text = selectedProductId.ToString();
             check_barcode.Checked = _product.IsBarcode;
             txt_barcodenumber.Text = _product.BarcodeNumber ?? string.Empty;
-            // ck_wholesale.Checked = _product.IsWholeSale;
-            // txt_wholeSaleQuantity.Text = _product.wholeSaleQuantity.ToString();
             txt_productName.Text = _product.ProductName;
             txt_quantity.Text = _product.Quantity.ToString();
             txt_price.Text = _product.Price.ToString();
@@ -227,11 +229,13 @@ namespace PointOfSales2024
 
 
             var selectedProduct = productViewModelBindingSource.Current as ProductViewModel;
-
+            int selectedProductIdText = Convert.ToInt32(lblProductId.Text);
             if (selectedProduct != null)
             {
                 // Update the product in the database
-                var productToUpdate = _dbContext.Products.Find(selectedProduct.Id);
+                var productToUpdate = _dbContext.Products.Find(selectedProductIdText);
+
+                productToUpdate.BarcodeNumber = txt_barcodenumber.Text;
                 productToUpdate.ProductName = txt_productName.Text;
                 productToUpdate.Quantity = Convert.ToInt32(txt_quantity.Text);
                 productToUpdate.Price = Convert.ToDouble(txt_price.Text);
@@ -239,6 +243,7 @@ namespace PointOfSales2024
                 _dbContext.SaveChanges();
 
                 // Update the BindingSource
+                selectedProduct.BarcodeNumber = productToUpdate.BarcodeNumber;
                 selectedProduct.ProductName = productToUpdate.ProductName;
                 selectedProduct.Quantity = productToUpdate.Quantity;
                 selectedProduct.Price = productToUpdate.Price;
@@ -271,7 +276,7 @@ namespace PointOfSales2024
                 ProductName = p.ProductName,
                 Quantity = p.Quantity,
                 Price = p.Price,
-                AddedBy = p.AppUser.Name,  // Get the name of the associated AppUser
+                AddedBy = p.AppUser.Name, // Get the name of the associated AppUser
                 DateAdded = p.DateAdded
             }).ToList();
 
@@ -285,7 +290,7 @@ namespace PointOfSales2024
 
         private void check_barcode_CheckedChanged(object sender, EventArgs e)
         {
-            if(check_barcode.Checked)
+            if (check_barcode.Checked)
             {
                 txt_barcodenumber.Clear();
                 txt_barcodenumber.Enabled = true;
@@ -293,9 +298,15 @@ namespace PointOfSales2024
             }
             else
             {
+                txt_barcodenumber.Clear();
                 txt_barcodenumber.Enabled = false;
                 txt_productName.Focus();
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

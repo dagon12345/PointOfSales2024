@@ -22,6 +22,25 @@ public class PosContext : DbContext
         //modelBuilder.Entity<Product>()
         //.HasIndex(p => new { p.ProductName})
         //.IsUnique();
+        modelBuilder.Entity<Order>()
+            .HasOne(p => p.Product)
+            .WithMany(o => o.Orders)
+            .HasForeignKey(o => o.ProductId)
+            .HasPrincipalKey(p => p.Id);
+
+
+        modelBuilder.Entity<AppUser>()
+            .HasMany(o => o.Orders)
+            .WithOne(a => a.AppUser)
+            .HasForeignKey(o => o.AppUserId)
+            .HasPrincipalKey(a => a.AppUserId);
+
+
+        modelBuilder.Entity<Product>()
+            .HasOne(a => a.AppUser)
+            .WithMany(p => p.Products)
+            .HasForeignKey(p => p.AppUserId)
+            .HasPrincipalKey(a => a.AppUserId);
 
         modelBuilder.Entity<AppUser>().HasData(
             new AppUser { AppUserId = 1, Name = "Lance", UserName = "lauespina", Password = "admin", IsAdmin = true },

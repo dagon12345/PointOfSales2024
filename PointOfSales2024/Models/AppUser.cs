@@ -11,6 +11,8 @@ public class AppUser
     public bool IsAdmin { get; set; }
 
     public ICollection<Product> Products { get; } = new List<Product>();// One app user many products going to be entered.
+    //public Product Product { get; set; } = null!;
+    public ICollection<Order> Orders { get; } = new List<Order>();
     //public ICollection<Order> Orders { get; } = new List<Order>();// One app user many products going to be entered.
 
 

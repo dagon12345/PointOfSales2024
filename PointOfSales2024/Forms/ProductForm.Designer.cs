@@ -55,6 +55,8 @@ namespace PointOfSales2024
             productViewModelBindingSource = new BindingSource(components);
             btn_update = new Button();
             txt_search = new TextBox();
+            label2 = new Label();
+            lblProductId = new Label();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productViewModelBindingSource).BeginInit();
@@ -63,7 +65,7 @@ namespace PointOfSales2024
             // btn_save
             // 
             btn_save.Cursor = Cursors.Hand;
-            btn_save.Location = new Point(130, 182);
+            btn_save.Location = new Point(131, 210);
             btn_save.Name = "btn_save";
             btn_save.Size = new Size(224, 32);
             btn_save.TabIndex = 4;
@@ -76,7 +78,7 @@ namespace PointOfSales2024
             check_barcode.AutoSize = true;
             check_barcode.Checked = true;
             check_barcode.CheckState = CheckState.Checked;
-            check_barcode.Location = new Point(360, 29);
+            check_barcode.Location = new Point(361, 62);
             check_barcode.Name = "check_barcode";
             check_barcode.Size = new Size(69, 19);
             check_barcode.TabIndex = 8;
@@ -86,21 +88,21 @@ namespace PointOfSales2024
             // 
             // txt_barcodenumber
             // 
-            txt_barcodenumber.Location = new Point(130, 32);
+            txt_barcodenumber.Location = new Point(131, 60);
             txt_barcodenumber.Name = "txt_barcodenumber";
             txt_barcodenumber.Size = new Size(224, 23);
             txt_barcodenumber.TabIndex = 0;
             // 
             // txt_productName
             // 
-            txt_productName.Location = new Point(130, 65);
+            txt_productName.Location = new Point(131, 93);
             txt_productName.Name = "txt_productName";
             txt_productName.Size = new Size(224, 23);
             txt_productName.TabIndex = 1;
             // 
             // txt_quantity
             // 
-            txt_quantity.Location = new Point(130, 101);
+            txt_quantity.Location = new Point(131, 129);
             txt_quantity.Name = "txt_quantity";
             txt_quantity.Size = new Size(224, 23);
             txt_quantity.TabIndex = 2;
@@ -109,7 +111,7 @@ namespace PointOfSales2024
             // txt_price
             // 
             txt_price.DataBindings.Add(new Binding("Text", productBindingSource, "Price", true, DataSourceUpdateMode.OnValidation, "0", "C1"));
-            txt_price.Location = new Point(130, 140);
+            txt_price.Location = new Point(131, 168);
             txt_price.Name = "txt_price";
             txt_price.Size = new Size(224, 23);
             txt_price.TabIndex = 3;
@@ -123,7 +125,7 @@ namespace PointOfSales2024
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(7, 32);
+            label1.Location = new Point(8, 60);
             label1.Name = "label1";
             label1.Size = new Size(111, 17);
             label1.TabIndex = 10;
@@ -133,7 +135,7 @@ namespace PointOfSales2024
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(22, 65);
+            label3.Location = new Point(23, 93);
             label3.Name = "label3";
             label3.Size = new Size(96, 17);
             label3.TabIndex = 12;
@@ -143,7 +145,7 @@ namespace PointOfSales2024
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(56, 101);
+            label4.Location = new Point(57, 129);
             label4.Name = "label4";
             label4.Size = new Size(62, 17);
             label4.TabIndex = 12;
@@ -153,7 +155,7 @@ namespace PointOfSales2024
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(80, 140);
+            label5.Location = new Point(81, 168);
             label5.Name = "label5";
             label5.Size = new Size(38, 17);
             label5.TabIndex = 12;
@@ -162,7 +164,7 @@ namespace PointOfSales2024
             // btn_remove
             // 
             btn_remove.Cursor = Cursors.Hand;
-            btn_remove.Location = new Point(130, 260);
+            btn_remove.Location = new Point(131, 288);
             btn_remove.Name = "btn_remove";
             btn_remove.Size = new Size(224, 34);
             btn_remove.TabIndex = 6;
@@ -259,7 +261,7 @@ namespace PointOfSales2024
             // btn_update
             // 
             btn_update.Cursor = Cursors.Hand;
-            btn_update.Location = new Point(130, 220);
+            btn_update.Location = new Point(131, 248);
             btn_update.Name = "btn_update";
             btn_update.Size = new Size(224, 34);
             btn_update.TabIndex = 5;
@@ -276,11 +278,37 @@ namespace PointOfSales2024
             txt_search.TabIndex = 13;
             txt_search.TextChanged += txt_search_TextChanged;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(47, 26);
+            label2.Name = "label2";
+            label2.Size = new Size(72, 17);
+            label2.TabIndex = 14;
+            label2.Text = "Product Id";
+            label2.Visible = false;
+            label2.Click += label2_Click;
+            // 
+            // lblProductId
+            // 
+            lblProductId.AutoSize = true;
+            lblProductId.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblProductId.Location = new Point(131, 27);
+            lblProductId.Name = "lblProductId";
+            lblProductId.Size = new Size(15, 17);
+            lblProductId.TabIndex = 14;
+            lblProductId.Text = "0";
+            lblProductId.Visible = false;
+            lblProductId.Click += label2_Click;
+            // 
             // ProductForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(957, 677);
+            Controls.Add(lblProductId);
+            Controls.Add(label2);
             Controls.Add(txt_search);
             Controls.Add(btn_update);
             Controls.Add(dataGridView1);
@@ -337,5 +365,7 @@ namespace PointOfSales2024
         private DataGridViewTextBoxColumn dateAddedDataGridViewTextBoxColumn;
         private TextBox txt_search;
         private BindingSource productBindingSource;
+        private Label label2;
+        private Label lblProductId;
     }
 }
