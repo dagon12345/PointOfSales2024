@@ -37,7 +37,7 @@ namespace PointOfSales2024
                 // Load the products from the database, including the related AppUser data
                 var products = await _dbContext.Products
                     .Include(p => p.AppUser)  // Include related data
-                    .AsNoTracking()
+                    //.AsNoTracking()
                     .ToListAsync();
 
 
@@ -82,8 +82,8 @@ namespace PointOfSales2024
                 Quantity = Convert.ToInt32(txt_quantity.Text),
                 Price = Convert.ToDouble(txt_price.Text),
                 //Profit = Convert.ToDouble(txt_profit.Text),
-                AppUserId = 1, // or get this dynamically
-                DateAdded = DateTime.Now
+                AppUserId = 1, // or get this dynamically/ we will use this later when we create login
+                DateAdded = DateTime.Now 
             };
 
             _dbContext.Products.Add(_product); // Add the new product to the context
@@ -99,7 +99,7 @@ namespace PointOfSales2024
                 ProductName = _product.ProductName,
                 Quantity = _product.Quantity,
                 Price = _product.Price,
-                AddedBy = "User Name",  // replace with actual user name
+                AddedBy = "User Name",  // replace with actual user name/ we will use this later when we create login
                 DateAdded = _product.DateAdded
             };
 
