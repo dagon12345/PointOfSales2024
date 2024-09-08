@@ -34,13 +34,10 @@ namespace PointOfSales2024
             btn_save = new Button();
             check_barcode = new CheckBox();
             txt_barcodenumber = new TextBox();
-            productBindingSource = new BindingSource(components);
-            productBindingSource1 = new BindingSource(components);
             txt_productName = new TextBox();
             txt_quantity = new TextBox();
             txt_price = new TextBox();
-            productBindingSource2 = new BindingSource(components);
-            productBindingSource3 = new BindingSource(components);
+            productBindingSource = new BindingSource(components);
             label1 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -59,9 +56,6 @@ namespace PointOfSales2024
             btn_update = new Button();
             txt_search = new TextBox();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)productBindingSource1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)productBindingSource2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)productBindingSource3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productViewModelBindingSource).BeginInit();
             SuspendLayout();
@@ -88,6 +82,7 @@ namespace PointOfSales2024
             check_barcode.TabIndex = 8;
             check_barcode.Text = "Barcode";
             check_barcode.UseVisualStyleBackColor = true;
+            check_barcode.CheckedChanged += check_barcode_CheckedChanged;
             // 
             // txt_barcodenumber
             // 
@@ -95,14 +90,6 @@ namespace PointOfSales2024
             txt_barcodenumber.Name = "txt_barcodenumber";
             txt_barcodenumber.Size = new Size(224, 23);
             txt_barcodenumber.TabIndex = 0;
-            // 
-            // productBindingSource
-            // 
-            productBindingSource.DataSource = typeof(Models.Product);
-            // 
-            // productBindingSource1
-            // 
-            productBindingSource1.DataSource = typeof(Models.Product);
             // 
             // txt_productName
             // 
@@ -121,21 +108,16 @@ namespace PointOfSales2024
             // 
             // txt_price
             // 
-            txt_price.DataBindings.Add(new Binding("DataContext", productBindingSource2, "Price", true));
-            txt_price.DataBindings.Add(new Binding("Text", productBindingSource3, "Price", true));
+            txt_price.DataBindings.Add(new Binding("Text", productBindingSource, "Price", true, DataSourceUpdateMode.OnValidation, "0", "C1"));
             txt_price.Location = new Point(130, 140);
             txt_price.Name = "txt_price";
             txt_price.Size = new Size(224, 23);
             txt_price.TabIndex = 3;
             txt_price.KeyPress += txt_price_KeyPress;
             // 
-            // productBindingSource2
+            // productBindingSource
             // 
-            productBindingSource2.DataSource = typeof(Models.Product);
-            // 
-            // productBindingSource3
-            // 
-            productBindingSource3.DataSource = typeof(Models.Product);
+            productBindingSource.DataSource = typeof(Models.Product);
             // 
             // label1
             // 
@@ -287,8 +269,6 @@ namespace PointOfSales2024
             // 
             // txt_search
             // 
-            txt_search.DataBindings.Add(new Binding("DataContext", productBindingSource2, "ProductName", true));
-            txt_search.DataBindings.Add(new Binding("Text", productBindingSource3, "ProductName", true));
             txt_search.Location = new Point(13, 350);
             txt_search.Name = "txt_search";
             txt_search.PlaceholderText = "Search";
@@ -320,9 +300,6 @@ namespace PointOfSales2024
             Text = "Products Form";
             Load += ProductForm_Load;
             ((System.ComponentModel.ISupportInitialize)productBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)productBindingSource1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)productBindingSource2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)productBindingSource3).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)productViewModelBindingSource).EndInit();
             ResumeLayout(false);
@@ -349,10 +326,6 @@ namespace PointOfSales2024
         private DataGridViewTextBoxColumn wholeSaleQuantityDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn profitDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private BindingSource productBindingSource;
-        private BindingSource productBindingSource1;
-        private BindingSource productBindingSource2;
-        private BindingSource productBindingSource3;
         private Button btn_update;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewCheckBoxColumn isBarcodeDataGridViewCheckBoxColumn;
@@ -363,5 +336,6 @@ namespace PointOfSales2024
         private DataGridViewTextBoxColumn AddedBy;
         private DataGridViewTextBoxColumn dateAddedDataGridViewTextBoxColumn;
         private TextBox txt_search;
+        private BindingSource productBindingSource;
     }
 }

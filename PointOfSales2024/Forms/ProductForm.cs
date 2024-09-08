@@ -37,7 +37,7 @@ namespace PointOfSales2024
                 // Load the products from the database, including the related AppUser data
                 var products = await _dbContext.Products
                     .Include(p => p.AppUser)  // Include related data
-                    //.AsNoTracking()
+                                              //.AsNoTracking()
                     .ToListAsync();
 
 
@@ -59,6 +59,7 @@ namespace PointOfSales2024
                 // Bind the product list to the DataGridView
                 productViewModelBindingSource.DataSource = productViewModels;
                 dataGridView1.DataSource = productViewModelBindingSource;
+                dataGridView1.ClearSelection();
             }
         }
 
@@ -83,7 +84,7 @@ namespace PointOfSales2024
                 Price = Convert.ToDouble(txt_price.Text),
                 //Profit = Convert.ToDouble(txt_profit.Text),
                 AppUserId = 1, // or get this dynamically/ we will use this later when we create login
-                DateAdded = DateTime.Now 
+                DateAdded = DateTime.Now
             };
 
             _dbContext.Products.Add(_product); // Add the new product to the context
@@ -104,6 +105,7 @@ namespace PointOfSales2024
             };
 
             productViewModelBindingSource.Add(newProductViewModel);
+            ClearFields();
             MessageBox.Show("Product saved successfully.");
 
 
@@ -117,6 +119,10 @@ namespace PointOfSales2024
         }
         private void ClearFields()
         {
+            dataGridView1.ClearSelection();
+            txt_barcodenumber.Enabled = true;
+            check_barcode.Checked = true;
+
             check_barcode.Checked = true;
             txt_barcodenumber.Clear();
             txt_productName.Clear();
@@ -125,6 +131,7 @@ namespace PointOfSales2024
             txt_price.Clear();
             txt_barcodenumber.Focus();
             btn_save.Text = "Save";
+         
 
 
         }
@@ -192,7 +199,12 @@ namespace PointOfSales2024
 
         private void txt_price_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);//Only handled numbers
+            // e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);//Only handled numbers
+            if (!char.IsNumber(e.KeyChar) & (Keys)e.KeyChar != Keys.Back & e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+            base.OnKeyPress(e);
         }
 
         private void txt_quantity_KeyPress(object sender, KeyPressEventArgs e)
@@ -268,6 +280,21 @@ namespace PointOfSales2024
             foreach (var productViewModel in filteredProductViewModels)
             {
                 productViewModelBindingSource.Add(productViewModel);
+            }
+        }
+
+        private void check_barcode_CheckedChanged(object sender, EventArgs e)
+        {
+            if(check_barcode.Checked)
+            {
+                txt_barcodenumber.Clear();
+                txt_barcodenumber.Enabled = true;
+                txt_barcodenumber.Focus();
+            }
+            else
+            {
+                txt_barcodenumber.Enabled = false;
+                txt_productName.Focus();
             }
         }
     }
