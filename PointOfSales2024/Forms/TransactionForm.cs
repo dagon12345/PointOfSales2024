@@ -184,7 +184,7 @@ namespace PointOfSales2024.Forms
 
         private void SortIdCounter()
         {
-            if (dataGridView1.Rows.Count > 0) 
+            if (dataGridView1.Rows.Count > 0)
             {
                 //Get the highes SortId from existing rows
                 _lastSortId = dataGridView1.Rows.Cast<DataGridViewRow>()
@@ -352,6 +352,7 @@ namespace PointOfSales2024.Forms
                 else if (overallTotal == 0.0)
                 {
                     MessageBox.Show("No product has been punched. Please scan a product first then continue", "Scan a product first", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtBarcode.Focus();
                     return;
                 }
 
@@ -432,7 +433,7 @@ namespace PointOfSales2024.Forms
 
         private void btnVoid_Click(object sender, EventArgs e)
         {
-            if(dataGridView1.Rows.Count == 0)
+            if (dataGridView1.Rows.Count == 0)
             {
                 MessageBox.Show("There is nothing to void", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -445,6 +446,7 @@ namespace PointOfSales2024.Forms
                 VoidFormula();
                 cashAndChangeFormula();
                 MessageBox.Show("Voided successfully", "Voided", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtBarcode.Focus();
 
             }
 
@@ -454,6 +456,16 @@ namespace PointOfSales2024.Forms
         private void txtCash_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView1_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_MouseLeave(object sender, EventArgs e)
+        {
+            txtBarcode.Focus();
         }
     }
 }

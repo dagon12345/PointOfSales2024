@@ -31,13 +31,14 @@
             btnAddproduct = new Button();
             btnAddStocks = new Button();
             btnTransact = new Button();
+            btnSales = new Button();
             SuspendLayout();
             // 
             // btnAddproduct
             // 
             btnAddproduct.Cursor = Cursors.Hand;
             btnAddproduct.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAddproduct.Location = new Point(12, 160);
+            btnAddproduct.Location = new Point(12, 31);
             btnAddproduct.Name = "btnAddproduct";
             btnAddproduct.Size = new Size(282, 105);
             btnAddproduct.TabIndex = 0;
@@ -49,7 +50,7 @@
             // 
             btnAddStocks.Cursor = Cursors.Hand;
             btnAddStocks.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAddStocks.Location = new Point(12, 282);
+            btnAddStocks.Location = new Point(12, 153);
             btnAddStocks.Name = "btnAddStocks";
             btnAddStocks.Size = new Size(282, 105);
             btnAddStocks.TabIndex = 0;
@@ -60,7 +61,7 @@
             // 
             btnTransact.Cursor = Cursors.Hand;
             btnTransact.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnTransact.Location = new Point(12, 404);
+            btnTransact.Location = new Point(12, 394);
             btnTransact.Name = "btnTransact";
             btnTransact.Size = new Size(282, 105);
             btnTransact.TabIndex = 0;
@@ -68,11 +69,24 @@
             btnTransact.UseVisualStyleBackColor = true;
             btnTransact.Click += btnTransact_Click;
             // 
+            // btnSales
+            // 
+            btnSales.Cursor = Cursors.Hand;
+            btnSales.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSales.Location = new Point(12, 273);
+            btnSales.Name = "btnSales";
+            btnSales.Size = new Size(282, 105);
+            btnSales.TabIndex = 1;
+            btnSales.Text = "Sales";
+            btnSales.UseVisualStyleBackColor = true;
+            btnSales.Click += btnSales_Click;
+            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1073, 668);
+            Controls.Add(btnSales);
             Controls.Add(btnTransact);
             Controls.Add(btnAddStocks);
             Controls.Add(btnAddproduct);
@@ -87,5 +101,6 @@
         private Button btnAddproduct;
         private Button btnAddStocks;
         private Button btnTransact;
+        private Button btnSales;
     }
 }

@@ -60,8 +60,6 @@
             groupBox3 = new GroupBox();
             btnVoid = new Button();
             dataGridView1 = new DataGridView();
-            orderViewModelBindingSource = new BindingSource(components);
-            groupBox4 = new GroupBox();
             Id = new DataGridViewTextBoxColumn();
             ProductId = new DataGridViewTextBoxColumn();
             barcodeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -69,6 +67,10 @@
             Quantity = new DataGridViewTextBoxColumn();
             priceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             OverallPrice = new DataGridViewTextBoxColumn();
+            orderViewModelBindingSource = new BindingSource(components);
+            groupBox4 = new GroupBox();
+            menuStrip1 = new MenuStrip();
+            searchProductToolStripMenuItem = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
@@ -79,6 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)orderViewModelBindingSource).BeginInit();
             groupBox4.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -91,9 +94,9 @@
             groupBox1.Controls.Add(txtCash);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(txtOverallTotal);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Location = new Point(12, 27);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(438, 427);
+            groupBox1.Size = new Size(438, 476);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             // 
@@ -185,9 +188,9 @@
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(txtBarcode);
-            groupBox2.Location = new Point(12, 445);
+            groupBox2.Location = new Point(12, 509);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(911, 95);
+            groupBox2.Size = new Size(1016, 95);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             // 
@@ -360,9 +363,9 @@
             groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBox3.Controls.Add(btnVoid);
             groupBox3.Controls.Add(dataGridView1);
-            groupBox3.Location = new Point(456, 12);
+            groupBox3.Location = new Point(456, 27);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(467, 427);
+            groupBox3.Size = new Size(572, 476);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             // 
@@ -370,7 +373,7 @@
             // 
             btnVoid.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnVoid.Cursor = Cursors.Hand;
-            btnVoid.Location = new Point(7, 385);
+            btnVoid.Location = new Point(7, 434);
             btnVoid.Name = "btnVoid";
             btnVoid.Size = new Size(149, 29);
             btnVoid.TabIndex = 22;
@@ -391,26 +394,10 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(454, 365);
+            dataGridView1.Size = new Size(559, 414);
             dataGridView1.TabIndex = 0;
-            // 
-            // orderViewModelBindingSource
-            // 
-            orderViewModelBindingSource.DataSource = typeof(ViewModel.OrderViewModel);
-            // 
-            // groupBox4
-            // 
-            groupBox4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox4.Controls.Add(txtQuantity);
-            groupBox4.Controls.Add(label2);
-            groupBox4.Controls.Add(btnEnter);
-            groupBox4.Controls.Add(txtOverallPrice);
-            groupBox4.Controls.Add(label6);
-            groupBox4.Location = new Point(12, 537);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(911, 83);
-            groupBox4.TabIndex = 22;
-            groupBox4.TabStop = false;
+            dataGridView1.Leave += dataGridView1_Leave;
+            dataGridView1.MouseLeave += dataGridView1_MouseLeave;
             // 
             // Id
             // 
@@ -472,17 +459,52 @@
             OverallPrice.Name = "OverallPrice";
             OverallPrice.ReadOnly = true;
             // 
+            // orderViewModelBindingSource
+            // 
+            orderViewModelBindingSource.DataSource = typeof(ViewModel.OrderViewModel);
+            // 
+            // groupBox4
+            // 
+            groupBox4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox4.Controls.Add(txtQuantity);
+            groupBox4.Controls.Add(label2);
+            groupBox4.Controls.Add(btnEnter);
+            groupBox4.Controls.Add(txtOverallPrice);
+            groupBox4.Controls.Add(label6);
+            groupBox4.Location = new Point(12, 601);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(1016, 83);
+            groupBox4.TabIndex = 22;
+            groupBox4.TabStop = false;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { searchProductToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1040, 24);
+            menuStrip1.TabIndex = 23;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // searchProductToolStripMenuItem
+            // 
+            searchProductToolStripMenuItem.Name = "searchProductToolStripMenuItem";
+            searchProductToolStripMenuItem.Size = new Size(99, 20);
+            searchProductToolStripMenuItem.Text = "&Search Product";
+            // 
             // TransactionForm
             // 
             AcceptButton = btnEnter;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(935, 645);
+            ClientSize = new Size(1040, 709);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Controls.Add(menuStrip1);
             KeyPreview = true;
+            MainMenuStrip = menuStrip1;
             Name = "TransactionForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "TransactionForm";
@@ -501,7 +523,10 @@
             ((System.ComponentModel.ISupportInitialize)orderViewModelBindingSource).EndInit();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -545,5 +570,7 @@
         private DataGridViewTextBoxColumn Quantity;
         private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn OverallPrice;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem searchProductToolStripMenuItem;
     }
 }

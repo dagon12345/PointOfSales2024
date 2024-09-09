@@ -30,8 +30,8 @@ namespace PointOfSales2024
             using (var context = new PosContext())
             {
 
-                // Ensure the database is created
-                // await context.Database.EnsureDeletedAsync();
+                // Delete and Create database below.
+               // await context.Database.EnsureDeletedAsync();
                 await context.Database.EnsureCreatedAsync();
 
                 // Load the products from the database, including the related AppUser data
