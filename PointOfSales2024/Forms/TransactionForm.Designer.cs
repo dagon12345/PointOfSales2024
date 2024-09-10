@@ -110,6 +110,7 @@
             btnTransact.Text = "&Transact(Alt + T)";
             btnTransact.UseVisualStyleBackColor = true;
             btnTransact.Click += btnTransact_Click;
+            btnTransact.KeyDown += btnTransact_KeyDown;
             // 
             // label8
             // 
@@ -137,9 +138,9 @@
             label7.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.Location = new Point(5, 124);
             label7.Name = "label7";
-            label7.Size = new Size(90, 17);
+            label7.Size = new Size(94, 17);
             label7.TabIndex = 20;
-            label7.Text = "&Cash(Alt + C)";
+            label7.Text = "&Cash(Ctrl + C)";
             // 
             // txtCash
             // 
@@ -233,6 +234,7 @@
             txtProductName.ReadOnly = true;
             txtProductName.Size = new Size(224, 29);
             txtProductName.TabIndex = 19;
+            txtProductName.TextChanged += txtProductName_TextChanged;
             // 
             // label5
             // 
@@ -261,9 +263,9 @@
             label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(238, 22);
             label3.Name = "label3";
-            label3.Size = new Size(149, 17);
+            label3.Size = new Size(152, 17);
             label3.TabIndex = 16;
-            label3.Text = "Product Name(Alt + P)";
+            label3.Text = "Product Name(Ctrl + S)";
             // 
             // label1
             // 
@@ -271,9 +273,9 @@
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(7, 22);
             label1.Name = "label1";
-            label1.Size = new Size(168, 17);
+            label1.Size = new Size(172, 17);
             label1.TabIndex = 12;
-            label1.Text = "&Barcode Number (Alt + B)";
+            label1.Text = "&Barcode Number (Ctrl + B)";
             // 
             // txtBarcode
             // 
@@ -284,6 +286,7 @@
             txtBarcode.Size = new Size(224, 29);
             txtBarcode.TabIndex = 13;
             txtBarcode.TextChanged += txtBarcode_TextChanged;
+            txtBarcode.KeyDown += txtBarcode_KeyDown;
             txtBarcode.KeyUp += txtBarcode_KeyUp;
             // 
             // btnEnter
@@ -338,6 +341,7 @@
             txtQuantity.Size = new Size(224, 29);
             txtQuantity.TabIndex = 15;
             txtQuantity.Text = "1";
+            txtQuantity.KeyDown += txtQuantity_KeyDown;
             txtQuantity.KeyPress += txtQuantity_KeyPress;
             txtQuantity.KeyUp += txtQuantity_KeyUp;
             txtQuantity.Leave += txtQuantity_Leave;
@@ -491,6 +495,7 @@
             searchProductToolStripMenuItem.Name = "searchProductToolStripMenuItem";
             searchProductToolStripMenuItem.Size = new Size(99, 20);
             searchProductToolStripMenuItem.Text = "&Search Product";
+            searchProductToolStripMenuItem.Click += searchProductToolStripMenuItem_Click;
             // 
             // TransactionForm
             // 
@@ -510,6 +515,7 @@
             Text = "TransactionForm";
             WindowState = FormWindowState.Maximized;
             Load += TransactionForm_Load;
+            KeyDown += TransactionForm_KeyDown;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -558,7 +564,6 @@
         private Label label7;
         private TextBox txtCash;
         private Button btnTransact;
-        private TextBox txtProductName;
         private Label lblProductId;
         private Label label9;
         private Label lblNotification;
@@ -572,5 +577,6 @@
         private DataGridViewTextBoxColumn OverallPrice;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem searchProductToolStripMenuItem;
+        public TextBox txtProductName;
     }
 }

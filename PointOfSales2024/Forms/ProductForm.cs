@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using PointOfSales2024.Data;
 using PointOfSales2024.Models;
 using PointOfSales2024.ViewModel;
-using System.ComponentModel;
 using System.Data;
 
 namespace PointOfSales2024
@@ -31,7 +30,7 @@ namespace PointOfSales2024
             {
 
                 // Delete and Create database below.
-               // await context.Database.EnsureDeletedAsync();
+                // await context.Database.EnsureDeletedAsync();
                 await context.Database.EnsureCreatedAsync();
 
                 // Load the products from the database, including the related AppUser data
@@ -63,53 +62,164 @@ namespace PointOfSales2024
             }
         }
 
+        private void Save()
+        {
+            try
+            {
+                /*Instead of getting data from database, we used the refresh grid same reflected as what we've added 
+            into our database.*/
+                if (txt_productName.Text == "")
+                {
+                    MessageBox.Show("Please fill all the fields");
+                    return;
+                }
+
+
+                _product = new Product
+                {
+                    IsBarcode = check_barcode.Checked,
+                    BarcodeNumber = txt_barcodenumber.Text,
+                    ProductName = txt_productName.Text,
+                    Quantity = Convert.ToInt32(txt_quantity.Text),
+                    Price = Convert.ToDouble(txt_price.Text),
+                    //Profit = Convert.ToDouble(txt_profit.Text),
+                    AppUserId = 1, // or get this dynamically/ we will use this later when we create login
+                    DateAdded = DateTime.Now
+                };
+
+                _dbContext.Products.Add(_product); // Add the new product to the context
+                _dbContext.SaveChanges(); // Save changes to the database
+
+
+                // Add the new product to the BindingSource
+                var newProductViewModel = new ProductViewModel
+                {
+                    Id = _product.Id,
+                    IsBarcode = _product.IsBarcode,
+                    BarcodeNumber = _product.BarcodeNumber,
+                    ProductName = _product.ProductName,
+                    Quantity = _product.Quantity,
+                    Price = _product.Price,
+                    AddedBy = "User Name",  // replace with actual user name/ we will use this later when we create login
+                    DateAdded = _product.DateAdded
+                };
+
+                productViewModelBindingSource.Add(newProductViewModel);
+                ClearFields();
+                MessageBox.Show("Product saved successfully.");
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Error message : {ex.Message}");
+            }
+        }
+
+        private void Update()
+        {
+            try
+            {
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    MessageBox.Show("Empty table.");
+                    return;
+                }
+                if (txt_productName.Text == "")
+                {
+                    MessageBox.Show("Select what you want to update");
+                    return;
+                }
+
+
+                var selectedProduct = productViewModelBindingSource.Current as ProductViewModel;
+                int selectedProductIdText = Convert.ToInt32(lblProductId.Text);
+                if (selectedProduct != null)
+                {
+                    // Update the product in the database
+                    var productToUpdate = _dbContext.Products.Find(selectedProductIdText);
+
+                    productToUpdate.BarcodeNumber = txt_barcodenumber.Text;
+                    productToUpdate.ProductName = txt_productName.Text;
+                    if(btn_save.Text == "Add Stocks")
+                    {
+                        productToUpdate.Quantity += Convert.ToInt32(txt_quantity.Text);
+
+                    }
+                 
+                    productToUpdate.Price = Convert.ToDouble(txt_price.Text);
+
+                    _dbContext.SaveChanges();
+
+                    // Update the BindingSource
+                    selectedProduct.BarcodeNumber = productToUpdate.BarcodeNumber;
+                    selectedProduct.ProductName = productToUpdate.ProductName;
+                    selectedProduct.Quantity = productToUpdate.Quantity;
+                    selectedProduct.Price = productToUpdate.Price;
+
+                    productViewModelBindingSource.ResetCurrentItem(); // Refresh the grid
+
+                    if(lblStatus.Text != "Status: Adding Stocks")
+                    {
+                        ClearFields();
+                        //return;
+                    
+
+                    }
+                    else
+                    {
+                        clearStocksAdding();// for adding of stocks
+
+                    }
+                   
+                    MessageBox.Show("Record updated Successfully");
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Error message : {ex.Message}");
+            }
+
+        }
+      
+        private void clearStocksAdding()
+        {
+            txt_quantity.Text = "0";
+
+        }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            /*Instead of getting data from database, we used the refresh grid same reflected as what we've added 
-             into our database.*/
-            if (txt_productName.Text == "")
+            if (btn_save.Text == "Add Stocks")
             {
-                MessageBox.Show("Please fill all the fields");
+                if (txt_productName.Text == "")
+                {
+                    MessageBox.Show("Please select a product you want to add a stocks.");
+                    return;
+                }
+                if (txt_quantity.Text == "" || txt_quantity.Text == "0")
+                {
+                    MessageBox.Show("You can't add an empty stock. Please enter a valid stocks to proceed");
+                    return;
+                }
+           
+                Update();//Addstocks condition inside.
+                //MessageBox.Show("Add Stocks here.");
+                return;
+            }
+
+            if (btn_save.Text != "Save")
+            {
+                Update();
                 return;
             }
 
 
-            _product = new Product
-            {
-                IsBarcode = check_barcode.Checked,
-                BarcodeNumber = txt_barcodenumber.Text,
-                ProductName = txt_productName.Text,
-                Quantity = Convert.ToInt32(txt_quantity.Text),
-                Price = Convert.ToDouble(txt_price.Text),
-                //Profit = Convert.ToDouble(txt_profit.Text),
-                AppUserId = 1, // or get this dynamically/ we will use this later when we create login
-                DateAdded = DateTime.Now
-            };
 
-            _dbContext.Products.Add(_product); // Add the new product to the context
-            _dbContext.SaveChanges(); // Save changes to the database
-
-
-            // Add the new product to the BindingSource
-            var newProductViewModel = new ProductViewModel
-            {
-                Id = _product.Id,
-                IsBarcode = _product.IsBarcode,
-                BarcodeNumber = _product.BarcodeNumber,
-                ProductName = _product.ProductName,
-                Quantity = _product.Quantity,
-                Price = _product.Price,
-                AddedBy = "User Name",  // replace with actual user name/ we will use this later when we create login
-                DateAdded = _product.DateAdded
-            };
-
-            productViewModelBindingSource.Add(newProductViewModel);
-            ClearFields();
-            MessageBox.Show("Product saved successfully.");
-
-
-
+            Save();
         }
 
 
@@ -129,8 +239,10 @@ namespace PointOfSales2024
             txt_quantity.Clear();
             txt_price.Clear();
             txt_price.Clear();
+            btn_save.Text = "Save";
+            txt_quantity.Enabled = true;
             txt_barcodenumber.Focus();
-            //btn_save.Text = "Save";
+
 
 
 
@@ -181,8 +293,9 @@ namespace PointOfSales2024
             }
 
 
-           int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-     
+
+            int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+
             _product = _dbContext.Products
                 .Include(p => p.AppUser) // Include related data if needed
                 .FirstOrDefault(x => x.Id == selectedProductId);
@@ -196,6 +309,22 @@ namespace PointOfSales2024
             txt_quantity.Text = _product.Quantity.ToString();
             txt_price.Text = _product.Price.ToString();
 
+
+            //Condition for our particular fields.
+
+            if (lblStatus.Text != "Status: Adding Stocks")
+            {
+
+
+                btn_save.Text = "Update";
+                txt_quantity.Enabled = false; //Disabled because we can't update a quantity we instead add a stocks.
+
+                
+            }
+            else
+            {
+                txt_quantity.Text = "0";
+            }
 
         }
 
@@ -216,42 +345,7 @@ namespace PointOfSales2024
 
         private void btn_update_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("Empty table.");
-                return;
-            }
-            if (txt_productName.Text == "")
-            {
-                MessageBox.Show("Select what you want to update");
-                return;
-            }
 
-
-            var selectedProduct = productViewModelBindingSource.Current as ProductViewModel;
-            int selectedProductIdText = Convert.ToInt32(lblProductId.Text);
-            if (selectedProduct != null)
-            {
-                // Update the product in the database
-                var productToUpdate = _dbContext.Products.Find(selectedProductIdText);
-
-                productToUpdate.BarcodeNumber = txt_barcodenumber.Text;
-                productToUpdate.ProductName = txt_productName.Text;
-                productToUpdate.Quantity = Convert.ToInt32(txt_quantity.Text);
-                productToUpdate.Price = Convert.ToDouble(txt_price.Text);
-
-                _dbContext.SaveChanges();
-
-                // Update the BindingSource
-                selectedProduct.BarcodeNumber = productToUpdate.BarcodeNumber;
-                selectedProduct.ProductName = productToUpdate.ProductName;
-                selectedProduct.Quantity = productToUpdate.Quantity;
-                selectedProduct.Price = productToUpdate.Price;
-
-                productViewModelBindingSource.ResetCurrentItem(); // Refresh the grid
-                ClearFields();
-                MessageBox.Show("Record updated Successfully");
-            }
 
 
         }

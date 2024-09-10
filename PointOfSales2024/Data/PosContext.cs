@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PointOfSales2024.Models;
 
 namespace PointOfSales2024.Data;
@@ -11,7 +12,10 @@ public class PosContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      => optionsBuilder.UseSqlite("Data Source=pos.db");
+      => optionsBuilder.UseSqlite("Data Source=pos.db")
+        .LogTo(Console.WriteLine, LogLevel.Information);
+
+    
 
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Product> Products { get; set; }

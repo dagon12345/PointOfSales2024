@@ -53,10 +53,11 @@ namespace PointOfSales2024
             AddedBy = new DataGridViewTextBoxColumn();
             dateAddedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             productViewModelBindingSource = new BindingSource(components);
-            btn_update = new Button();
             txt_search = new TextBox();
             label2 = new Label();
             lblProductId = new Label();
+            label6 = new Label();
+            lblStatus = new Label();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productViewModelBindingSource).BeginInit();
@@ -164,7 +165,7 @@ namespace PointOfSales2024
             // btn_remove
             // 
             btn_remove.Cursor = Cursors.Hand;
-            btn_remove.Location = new Point(131, 288);
+            btn_remove.Location = new Point(131, 248);
             btn_remove.Name = "btn_remove";
             btn_remove.Size = new Size(224, 34);
             btn_remove.TabIndex = 6;
@@ -258,20 +259,9 @@ namespace PointOfSales2024
             // 
             productViewModelBindingSource.DataSource = typeof(ViewModel.ProductViewModel);
             // 
-            // btn_update
-            // 
-            btn_update.Cursor = Cursors.Hand;
-            btn_update.Location = new Point(131, 248);
-            btn_update.Name = "btn_update";
-            btn_update.Size = new Size(224, 34);
-            btn_update.TabIndex = 5;
-            btn_update.Text = "Update";
-            btn_update.UseVisualStyleBackColor = true;
-            btn_update.Click += btn_update_Click;
-            // 
             // txt_search
             // 
-            txt_search.Location = new Point(13, 350);
+            txt_search.Location = new Point(12, 337);
             txt_search.Name = "txt_search";
             txt_search.PlaceholderText = "Search";
             txt_search.Size = new Size(224, 23);
@@ -302,15 +292,34 @@ namespace PointOfSales2024
             lblProductId.Visible = false;
             lblProductId.Click += label2_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(12, 363);
+            label6.Name = "label6";
+            label6.Size = new Size(190, 15);
+            label6.TabIndex = 15;
+            label6.Text = "Click the product below to update.";
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Location = new Point(6, 3);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(112, 15);
+            lblStatus.TabIndex = 16;
+            lblStatus.Text = "Status: Add Product";
+            // 
             // ProductForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(957, 677);
+            Controls.Add(lblStatus);
+            Controls.Add(label6);
             Controls.Add(lblProductId);
             Controls.Add(label2);
             Controls.Add(txt_search);
-            Controls.Add(btn_update);
             Controls.Add(dataGridView1);
             Controls.Add(btn_remove);
             Controls.Add(label5);
@@ -336,25 +345,17 @@ namespace PointOfSales2024
 
         #endregion
         private DataGridViewTextBoxColumn addedByDataGridViewTextBoxColumn;
-        private Button btn_save;
-        private CheckBox check_barcode;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private TextBox txt_barcodenumber;
-        private TextBox txt_productName;
-        private TextBox txt_quantity;
-        private TextBox txt_price;
         private Label label1;
         private Label label3;
         private Label label4;
         private Label label5;
-        private Button btn_remove;
         private DataGridView dataGridView1;
         private BindingSource productViewModelBindingSource;
         private DataGridViewCheckBoxColumn isWholeSaleDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn wholeSaleQuantityDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn profitDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private Button btn_update;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewCheckBoxColumn isBarcodeDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn barcodeNumberDataGridViewTextBoxColumn;
@@ -367,5 +368,14 @@ namespace PointOfSales2024
         private BindingSource productBindingSource;
         private Label label2;
         private Label lblProductId;
+        private Label label6;
+        public Button btn_save;
+        public CheckBox check_barcode;
+        public TextBox txt_barcodenumber;
+        public TextBox txt_productName;
+        public TextBox txt_quantity;
+        public TextBox txt_price;
+        public Button btn_remove;
+        public Label lblStatus;
     }
 }

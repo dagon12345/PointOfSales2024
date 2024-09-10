@@ -1,5 +1,6 @@
 ﻿using PointOfSales2024.Data;
 using PointOfSales2024.Models;
+using PointOfSales2024.Popups;
 using PointOfSales2024.ViewModel;
 using System.Data;
 
@@ -14,6 +15,12 @@ namespace PointOfSales2024.Forms
             InitializeComponent();
             _dbContext = new PosContext();
             txtCash.ShortcutsEnabled = true;
+            this.KeyPreview = true;
+            this.KeyDown += txtBarcode_KeyDown;
+            this.KeyDown += txtCash_KeyDown;
+            this.KeyDown += txtQuantity_KeyDown;
+            this.KeyDown += btnTransact_KeyDown;
+            searchProductToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
 
 
         }
@@ -322,6 +329,12 @@ namespace PointOfSales2024.Forms
 
         private void txtCash_KeyDown(object sender, KeyEventArgs e)
         {
+            // Check if Ctrl+C is pressed
+            if ((e.Control && e.KeyCode == Keys.C))
+            {
+                //Focus the cash text
+                txtCash.Focus();
+            }
 
         }
 
@@ -466,6 +479,96 @@ namespace PointOfSales2024.Forms
         private void dataGridView1_MouseLeave(object sender, EventArgs e)
         {
             txtBarcode.Focus();
+        }
+
+        //Open form and prevent the form from opening again once the instance is not null.
+
+        SearchProductPopUp searchProductPopup;
+        private void searchProductToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.OfType<SearchProductPopUp>().Any())
+            {
+                searchProductPopup.Select();
+                searchProductPopup.BringToFront();
+            }
+            else
+            {
+                searchProductPopup = new SearchProductPopUp();
+                searchProductPopup.ShowDialog();
+
+            }
+        }
+
+        private void TransactionForm_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void txtProductName_TextChanged(object sender, EventArgs e)
+        {
+            var textFilter = txtProductName.Text.ToLower();
+
+            var searchedBarcode = _dbContext.Products
+                                            .Where(x => x.ProductName.ToLower().Equals(textFilter))
+                                            .ToList();
+
+            var filteredOrderViewModel = searchedBarcode.Select(p => new OrderViewModel
+            {
+
+                Id = p.Id,
+                Barcode = p.BarcodeNumber,
+                ProductName = p.ProductName,
+                Quantity = p.Quantity,
+                Price = p.Price,
+
+            }).ToList();
+
+
+
+            int productId = Convert.ToInt32(lblProductId.Text);
+            foreach (var orderViewModel in filteredOrderViewModel)
+            {
+                //orderViewModel.Id = orderViewModel.Id;
+                productId = orderViewModel.Id;
+                lblProductId.Text = productId.ToString();
+                txtBarcode.Text = orderViewModel.Barcode;
+                txtProductName.Text = orderViewModel.ProductName;
+                txtPrice.Text = orderViewModel.Price.ToString("f2");
+
+            }
+
+            Formula();
+            cashAndChangeFormula();
+
+        }
+
+        private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if Ctrl+B is pressed
+            if ((e.Control && e.KeyCode == Keys.B))
+            {
+                //Focus the txtBarcode
+                txtBarcode.Focus();
+            }
+        }
+
+        private void txtQuantity_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if Ctrl+Q is pressed
+            if ((e.Control && e.KeyCode == Keys.Q))
+            {
+                //Focus the txtQuantity
+                txtQuantity.Focus();
+            }
+        }
+
+        private void btnTransact_KeyDown(object sender, KeyEventArgs e)
+        {
+            if((e.Control && e.KeyCode == Keys.T))
+            {
+                btnTransact.PerformClick();
+            }
+
         }
     }
 }

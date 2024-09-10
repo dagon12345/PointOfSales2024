@@ -56,6 +56,7 @@
             btnAddStocks.TabIndex = 0;
             btnAddStocks.Text = "Add Stocks";
             btnAddStocks.UseVisualStyleBackColor = true;
+            btnAddStocks.Click += btnAddStocks_Click;
             // 
             // btnTransact
             // 

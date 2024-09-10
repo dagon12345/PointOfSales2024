@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace PointOfSales2024.Forms
+﻿namespace PointOfSales2024.Forms
 {
     public partial class DashboardForm : Form
     {
@@ -63,6 +53,37 @@ namespace PointOfSales2024.Forms
                 _salesFormCurrentInstance.Show();
             }
             _salesFormCurrentInstance.BringToFront();
+        }
+
+        private void clicked()
+        {
+
+            productForm.txt_barcodenumber.Enabled = false;
+            productForm.check_barcode.Enabled = false;
+            productForm.txt_productName.Enabled = false;
+            productForm.txt_price.Enabled = false;
+            productForm.btn_remove.Enabled = false;
+            productForm.btn_save.Text = "Add Stocks";
+            productForm.lblStatus.Text = "Status: Adding Stocks";
+            productForm.txt_quantity.Text = "0";
+        }
+        ProductForm productForm;
+        private void btnAddStocks_Click(object sender, EventArgs e)
+        {
+
+            if (Application.OpenForms.OfType<ProductForm>().Any())
+            {
+                productForm.Select();
+                productForm.BringToFront();
+            }
+            else
+            {
+                productForm = new ProductForm();
+                clicked();
+                productForm.ShowDialog();
+
+            }
+
         }
     }
 }
