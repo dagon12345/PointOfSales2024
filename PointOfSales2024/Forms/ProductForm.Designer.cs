@@ -58,6 +58,7 @@ namespace PointOfSales2024
             lblProductId = new Label();
             label6 = new Label();
             lblStatus = new Label();
+            btnRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productViewModelBindingSource).BeginInit();
@@ -177,6 +178,7 @@ namespace PointOfSales2024
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, isBarcodeDataGridViewCheckBoxColumn, barcodeNumberDataGridViewTextBoxColumn, productNameDataGridViewTextBoxColumn, quantityDataGridViewTextBoxColumn, priceDataGridViewTextBoxColumn, AddedBy, dateAddedDataGridViewTextBoxColumn });
@@ -310,11 +312,24 @@ namespace PointOfSales2024
             lblStatus.TabIndex = 16;
             lblStatus.Text = "Status: Add Product";
             // 
+            // btnRefresh
+            // 
+            btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.Location = new Point(828, 330);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(116, 34);
+            btnRefresh.TabIndex = 17;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
+            // 
             // ProductForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(957, 677);
+            Controls.Add(btnRefresh);
             Controls.Add(lblStatus);
             Controls.Add(label6);
             Controls.Add(lblProductId);
@@ -334,7 +349,8 @@ namespace PointOfSales2024
             Controls.Add(btn_save);
             Name = "ProductForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Products Form";
+            Text = "Product Form";
+            WindowState = FormWindowState.Maximized;
             Load += ProductForm_Load;
             ((System.ComponentModel.ISupportInitialize)productBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -377,5 +393,6 @@ namespace PointOfSales2024
         public TextBox txt_price;
         public Button btn_remove;
         public Label lblStatus;
+        public Button btnRefresh;
     }
 }

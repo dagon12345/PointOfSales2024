@@ -2,7 +2,9 @@
 using PointOfSales2024.Models;
 using PointOfSales2024.Popups;
 using PointOfSales2024.ViewModel;
+using System;
 using System.Data;
+using System.Drawing.Printing;
 
 namespace PointOfSales2024.Forms
 {
@@ -338,6 +340,153 @@ namespace PointOfSales2024.Forms
 
         }
 
+        private void printReceipt()
+        {
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
+
+            // You can show a Print Dialog if needed:
+            PrintDialog printDialog = new PrintDialog();
+            //if (printDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    printDocument.Print();  // trigger printing
+            //}
+            //else
+           // {
+           if(checkBox1.Checked)
+            {
+                printDocument.Print();
+            }
+
+               // Automatically trigger printing without dialog if you prefer
+            //}
+        }
+
+        private string[] SplitStringToLines(string text, Font font, float maxWidth, Graphics g)
+        {
+            List<string> lines = new List<string>();
+            string[] words = text.Split(' ');
+
+            string currentLine = "";
+            foreach (string word in words)
+            {
+                // Measure the current line with the new word added
+                string testLine = currentLine.Length > 0 ? currentLine + " " + word : word;
+                SizeF textSize = g.MeasureString(testLine, font);
+
+                // If adding the new word exceeds the max width, commit the current line and start a new one
+                if (textSize.Width > maxWidth)
+                {
+                    lines.Add(currentLine);
+                    currentLine = word;  // Start a new line with the current word
+                }
+                else
+                {
+                    currentLine = testLine;  // Add the word to the current line
+                }
+            }
+
+            // Add the last line
+            if (currentLine.Length > 0)
+            {
+                lines.Add(currentLine);
+            }
+
+            return lines.ToArray();
+        }
+
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            // Define font, alignment, and margin variables for your receipt
+            Font font = new Font("Courier New", 7);  // Smaller fixed-width font for better fit
+            Font boldFont = new Font("Courier New", 8, FontStyle.Bold); // Slightly larger for headings
+            float lineHeight = font.GetHeight();
+            float startX = 4;  // Adjusted left margin
+            float startY = 5;   // Small top margin
+            float offsetY = 0;
+            float maxWidth = 190;  // Max width in pixels for 56mm paper (about 200px total width minus margins)
+            float paperWidth = 190;  // Approximate width for 56mm paper in pixels
+
+            // Print receipt header
+            e.Graphics.DrawString("A. Bracquene's", boldFont, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;  // Add some space
+            e.Graphics.DrawString("Sari-Sari Store", boldFont, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;  // Add some space
+            e.Graphics.DrawString("Store Owner:", font, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;  // Add some space
+            e.Graphics.DrawString("Maria Fe Cortes Urquia", boldFont, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;  // Add some space
+            e.Graphics.DrawString("** Not an official receipt **", font, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight * 2;  // Add some space
+
+            // Print transaction date
+            e.Graphics.DrawString("Transaction Date:", font, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;
+            e.Graphics.DrawString(DateTime.Now.ToString("MMM dd, yyyy hh:mm tt"), font, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight * 2;
+
+            // Print column headers (Qty, Product, Price)
+            float qtyWidth = 25;  // Width for Qty
+            float priceWidth = 40;  // Width for Price
+            //float totalWidth = 50;  // Width for Total
+
+            e.Graphics.DrawString("Qty", boldFont, Brushes.Black, startX + 10 , startY + offsetY);  // Qty header
+            //e.Graphics.DrawString("Product", boldFont, Brushes.Black, startX + qtyWidth + 5, startY + offsetY);  // Product header
+            e.Graphics.DrawString("Price", boldFont, Brushes.Black, startX + 10 + qtyWidth, startY + offsetY);  // Price header
+            e.Graphics.DrawString("Total", boldFont, Brushes.Black, startX + 10 + qtyWidth + priceWidth, startY + offsetY);  // Total header
+            offsetY += lineHeight * 2;
+
+            // Loop through the DataGridView rows and print each item
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                var row = dataGridView1.Rows[i];
+
+                // Get the product name, quantity, price, and overall price
+                string productName = row.Cells["ProductName"].Value.ToString();
+                int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
+                double price = Convert.ToDouble(row.Cells["Price"].Value);
+                double overallPrice = Convert.ToDouble(row.Cells["OverallPrice"].Value);
+
+                // Print the product name in the first row
+                string[] productNameLines = SplitStringToLines(productName, font, maxWidth, e.Graphics);  // Break into multiple lines if necessary
+                foreach (string line in productNameLines)
+                {
+                    e.Graphics.DrawString(line, font, Brushes.Black, startX, startY + offsetY);  // Print product name in full width
+                    offsetY += lineHeight;  // Move to the next line for wrapped text
+                }
+
+                // Print the details in the second row: Quantity, Price, Overall Price
+                float detailOffsetX = startX + 10;  // Adjusted offset to move text 5 pixels to the right
+                string details = $"{quantity} x {price:F2} = {overallPrice:F2}";
+                e.Graphics.DrawString(details, font, Brushes.Black, detailOffsetX, startY + offsetY);
+                offsetY += lineHeight * 2;  // Add space after each item
+
+            }
+
+            // Print totals
+            e.Graphics.DrawString("Amount Due: " + txtOverallTotal.Text, boldFont, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;
+            e.Graphics.DrawString("Amount Tendered: " + txtCash.Text, boldFont, Brushes.Black, startX, startY + offsetY);
+            offsetY += lineHeight;
+            e.Graphics.DrawString("Change: " + (Convert.ToDouble(txtCash.Text) - Convert.ToDouble(txtOverallTotal.Text)).ToString("F2"), boldFont, Brushes.Black, startX, startY + offsetY);
+
+            // Add footer "Thank you, come again!" centered
+            offsetY += lineHeight * 2;
+            string footerText = "Thank you. Come again!";
+            float footerTextWidth = e.Graphics.MeasureString(footerText, font).Width;
+            float footerX = (paperWidth - footerTextWidth) / 2;  // Center the text
+
+            e.Graphics.DrawString(footerText, font, Brushes.Black, footerX, startY + offsetY);
+
+            // Indicate that more pages are not needed
+            e.HasMorePages = false;
+        }
+
+
+
+
+
         private void btnTransact_Click(object sender, EventArgs e)
         {
 
@@ -394,14 +543,23 @@ namespace PointOfSales2024.Forms
                         //Add the order to the context
                         _dbContext.Orders.Add(_order);
 
+                        //Minus the quantity ordered into our products
+                        var productReturnStock = _dbContext.Products.Find(orderProductId);
+                        productReturnStock.Quantity -= quantity;
+
+                        // _dbContext.SaveChanges();
+
+
+
                     }
                     // Save all changes to the database at once.
                     _dbContext.SaveChanges();
-
+                    printReceipt();//Printing or receipt
                     dataGridView1.Rows.Clear();
                     MessageBox.Show("Order transacted successfully", "Transacted", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearFields();
                     ClearTransactions();
+               
                 }
 
 
@@ -564,7 +722,7 @@ namespace PointOfSales2024.Forms
 
         private void btnTransact_KeyDown(object sender, KeyEventArgs e)
         {
-            if((e.Control && e.KeyCode == Keys.T))
+            if ((e.Control && e.KeyCode == Keys.T))
             {
                 btnTransact.PerformClick();
             }

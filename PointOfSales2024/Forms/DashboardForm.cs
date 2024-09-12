@@ -10,23 +10,25 @@
 
         private void instanceHasBeenClosed(object sender, FormClosedEventArgs e)
         {
-            _currentInstance = null;
             _transactionFormCurrentInstance = null;
             _salesFormCurrentInstance = null;
         }
 
         //Open form and prevent the form from opening again once the instance is not null.
 
-        private ProductForm _currentInstance = null;
         private void btnAddproduct_Click(object sender, EventArgs e)
         {
-            if (_currentInstance == null)
+            if (Application.OpenForms.OfType<ProductForm>().Any())
             {
-                _currentInstance = new ProductForm();
-                _currentInstance.FormClosed += instanceHasBeenClosed;
-                _currentInstance.Show();
+                productForm.Select();
+                productForm.BringToFront();
             }
-            _currentInstance.BringToFront();
+            else
+            {
+                productForm = new ProductForm();
+                productForm.ShowDialog();
+
+            }
         }
 
 
@@ -83,6 +85,24 @@
                 productForm.ShowDialog();
 
             }
+
+        }
+        AddedStocksForm addedStocksForm;
+        private void btnAddedStocks_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.OfType<AddedStocksForm>().Any())
+            {
+                addedStocksForm.Select();
+                addedStocksForm.BringToFront();
+            }
+            else
+            {
+                addedStocksForm = new AddedStocksForm();
+              //  clicked();
+                addedStocksForm.Show();
+
+            }
+
 
         }
     }

@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
+            checkBox1 = new CheckBox();
             btnTransact = new Button();
             label8 = new Label();
             txtChange = new TextBox();
@@ -63,9 +64,9 @@
             Id = new DataGridViewTextBoxColumn();
             ProductId = new DataGridViewTextBoxColumn();
             barcodeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            productNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            ProductName = new DataGridViewTextBoxColumn();
             Quantity = new DataGridViewTextBoxColumn();
-            priceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            Price = new DataGridViewTextBoxColumn();
             OverallPrice = new DataGridViewTextBoxColumn();
             orderViewModelBindingSource = new BindingSource(components);
             groupBox4 = new GroupBox();
@@ -87,6 +88,7 @@
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            groupBox1.Controls.Add(checkBox1);
             groupBox1.Controls.Add(btnTransact);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(txtChange);
@@ -100,12 +102,24 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Checked = true;
+            checkBox1.CheckState = CheckState.Checked;
+            checkBox1.Location = new Point(7, 308);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(127, 19);
+            checkBox1.TabIndex = 23;
+            checkBox1.Text = "Automatic Printing";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // btnTransact
             // 
             btnTransact.Cursor = Cursors.Hand;
-            btnTransact.Location = new Point(56, 315);
+            btnTransact.Location = new Point(7, 333);
             btnTransact.Name = "btnTransact";
-            btnTransact.Size = new Size(317, 29);
+            btnTransact.Size = new Size(412, 81);
             btnTransact.TabIndex = 22;
             btnTransact.Text = "&Transact(Alt + T)";
             btnTransact.UseVisualStyleBackColor = true;
@@ -392,7 +406,7 @@
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, ProductId, barcodeDataGridViewTextBoxColumn, productNameDataGridViewTextBoxColumn, Quantity, priceDataGridViewTextBoxColumn, OverallPrice });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, ProductId, barcodeDataGridViewTextBoxColumn, ProductName, Quantity, Price, OverallPrice });
             dataGridView1.DataSource = orderViewModelBindingSource;
             dataGridView1.Location = new Point(7, 14);
             dataGridView1.Name = "dataGridView1";
@@ -418,7 +432,6 @@
             ProductId.HeaderText = "ProductId";
             ProductId.Name = "ProductId";
             ProductId.ReadOnly = true;
-            ProductId.Visible = false;
             // 
             // barcodeDataGridViewTextBoxColumn
             // 
@@ -428,13 +441,13 @@
             barcodeDataGridViewTextBoxColumn.Name = "barcodeDataGridViewTextBoxColumn";
             barcodeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // productNameDataGridViewTextBoxColumn
+            // ProductName
             // 
-            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            productNameDataGridViewTextBoxColumn.HeaderText = "ProductName";
-            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            ProductName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ProductName.DataPropertyName = "ProductName";
+            ProductName.HeaderText = "ProductName";
+            ProductName.Name = "ProductName";
+            ProductName.ReadOnly = true;
             // 
             // Quantity
             // 
@@ -444,13 +457,13 @@
             Quantity.Name = "Quantity";
             Quantity.ReadOnly = true;
             // 
-            // priceDataGridViewTextBoxColumn
+            // Price
             // 
-            priceDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            priceDataGridViewTextBoxColumn.HeaderText = "Price";
-            priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            priceDataGridViewTextBoxColumn.ReadOnly = true;
+            Price.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Price.DataPropertyName = "Price";
+            Price.HeaderText = "Price";
+            Price.Name = "Price";
+            Price.ReadOnly = true;
             // 
             // OverallPrice
             // 
@@ -568,15 +581,16 @@
         private Label label9;
         private Label lblNotification;
         private Button btnVoid;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn ProductId;
-        private DataGridViewTextBoxColumn barcodeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn Quantity;
-        private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn OverallPrice;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem searchProductToolStripMenuItem;
         public TextBox txtProductName;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn ProductId;
+        private DataGridViewTextBoxColumn barcodeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn ProductName;
+        private DataGridViewTextBoxColumn Quantity;
+        private DataGridViewTextBoxColumn Price;
+        private DataGridViewTextBoxColumn OverallPrice;
+        private CheckBox checkBox1;
     }
 }

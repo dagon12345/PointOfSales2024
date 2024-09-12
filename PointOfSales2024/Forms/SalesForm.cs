@@ -17,7 +17,7 @@ namespace PointOfSales2024.Forms
         public SalesForm()
         {
             InitializeComponent();
-
+            _dbContext = new PosContext();
 
         }
 
@@ -60,6 +60,7 @@ namespace PointOfSales2024.Forms
                 {
                     Id = o.Id,
                     OrderId = o.OrderId,
+                    ProductId = o.ProductId,
                     ProductName = o.Product.ProductName,
                     ProductBarcode = o.Product.BarcodeNumber,
                     Price = o.Product.Price,
@@ -202,23 +203,38 @@ namespace PointOfSales2024.Forms
 
                 var selectedProduct = salesViewModelBindingSource.Current as SalesViewModel;
 
-                if (selectedProduct != null)
+                using (var context = new PosContext())
                 {
-                    using(var context = new PosContext())
+                    var productToDelete = context.Orders.Find(selectedProduct.Id);
+                    if (productToDelete != null)
                     {
-                        // Delete the product from the database
-                        var productToDelete = context.Orders.Find(selectedProduct.Id);
+                        //remove the producs from order database.
                         context.Orders.Remove(productToDelete);
                         context.SaveChanges();
 
-                        // Remove the product from the BindingSource
+                        //Remove added back to the products once voided in sales
+                        int selectedProductId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ProductId"].Value);
+                        var productReturnStock = context.Products.Find(selectedProductId);
+                        if (productReturnStock != null)
+                        {
+                            productReturnStock.Quantity += productToDelete.OrderQuantity;
+                            context.SaveChanges();
+                           
+                            MessageBox.Show("Particular sales removed successfully. Quantity is added back to to product quantity.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Product not found.");
+                        }
+
                         salesViewModelBindingSource.Remove(selectedProduct);
-                        dataGridView1.Refresh();
-                        MessageBox.Show("Transaction deleted sucessfully.");
-                        Formula();
                     }
-                  
+                    else
+                    {
+                        MessageBox.Show("Order not found.");
+                    }
                 }
+
 
             }
         }

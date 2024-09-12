@@ -24,6 +24,7 @@ public class Product
 
     public AppUser AppUser { get; set; } = null!;// Required reference navigation to princial AppUser.
     public ICollection<Order> Orders { get; } = new List<Order>();
+    public ICollection<AddedStock> AddedStocks { get; }  = new List<AddedStock>();
     /* Entity Product hasmany orders with one product has foreign key Id*/
    // public Order Order { get; set; } = null!;
 }

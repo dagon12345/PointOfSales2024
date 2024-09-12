@@ -11,6 +11,7 @@ namespace PointOfSales2024
         private PosContext _dbContext;
         private Product? _product;
         private ProductViewModel _productViewModel;
+        private AddedStock _stock;
         public ProductForm()
         {
             InitializeComponent();
@@ -20,11 +21,10 @@ namespace PointOfSales2024
 
 
         //private BindingList<ProductViewModel> list = new BindingList<ProductViewModel>();
-
-        protected override async void OnLoad(EventArgs e)
+        private async Task LoadProductAsync()
         {
-            base.OnLoad(e);
-            _dbContext = new PosContext();
+
+
 
             using (var context = new PosContext())
             {
@@ -60,6 +60,17 @@ namespace PointOfSales2024
                 dataGridView1.DataSource = productViewModelBindingSource;
                 dataGridView1.ClearSelection();
             }
+
+        }
+        protected override async void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            _dbContext = new PosContext();
+            await LoadProductAsync();
+        }
+        private async void Refresh()
+        {
+            await LoadProductAsync();
         }
 
         private void Save()
@@ -70,7 +81,7 @@ namespace PointOfSales2024
             into our database.*/
                 if (txt_productName.Text == "")
                 {
-                    MessageBox.Show("Please fill all the fields");
+                    MessageBox.Show("Please fill all the fields", "Fill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -91,6 +102,27 @@ namespace PointOfSales2024
                 _dbContext.SaveChanges(); // Save changes to the database
 
 
+                //Add into AddedStock database.
+
+                int productId = Convert.ToInt32(lblProductId.Text);
+                int quantity = Convert.ToInt32(txt_quantity.Text);
+
+                _stock = new AddedStock
+                {
+                    ProductId = _product.Id,
+                    Quantity = quantity,
+                    DateAdded = DateTime.Now,
+                    AppUserId = 1, // we can change this later once the login form is created.
+                };
+
+                _dbContext.AddedStocks.Add(_stock); // Add the new product to the context
+
+
+                _dbContext.SaveChanges(); // Save changes to the database
+
+
+
+
                 // Add the new product to the BindingSource
                 var newProductViewModel = new ProductViewModel
                 {
@@ -106,13 +138,13 @@ namespace PointOfSales2024
 
                 productViewModelBindingSource.Add(newProductViewModel);
                 ClearFields();
-                MessageBox.Show("Product saved successfully.");
+                MessageBox.Show("Product saved successfully.", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Error message : {ex.Message}");
+                MessageBox.Show($"Error message : {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -122,12 +154,12 @@ namespace PointOfSales2024
             {
                 if (dataGridView1.Rows.Count == 0)
                 {
-                    MessageBox.Show("Empty table.");
+                    MessageBox.Show("Empty table.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (txt_productName.Text == "")
                 {
-                    MessageBox.Show("Select what you want to update");
+                    MessageBox.Show("Select what you want to update", "Select", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -141,15 +173,36 @@ namespace PointOfSales2024
 
                     productToUpdate.BarcodeNumber = txt_barcodenumber.Text;
                     productToUpdate.ProductName = txt_productName.Text;
-                    if(btn_save.Text == "Add Stocks")
+                    if (btn_save.Text == "Add Stocks")
                     {
                         productToUpdate.Quantity += Convert.ToInt32(txt_quantity.Text);
 
                     }
-                 
+
                     productToUpdate.Price = Convert.ToDouble(txt_price.Text);
 
                     _dbContext.SaveChanges();
+
+
+                    //Add into AddedStock database only if the button text is Add Stocks.
+                    if (btn_save.Text == "Add Stocks")
+                    {
+
+
+                        int productId = Convert.ToInt32(lblProductId.Text);
+                        int quantity = Convert.ToInt32(txt_quantity.Text);
+
+                        _stock = new AddedStock
+                        {
+                            ProductId = productId,
+                            Quantity = quantity,
+                            DateAdded = DateTime.Now,
+                            AppUserId = 1, // we can change this later once the login form is created.
+                        };
+
+                        _dbContext.AddedStocks.Add(_stock); // Add the new product to the context
+                        _dbContext.SaveChanges(); // Save changes to the database
+                    }
 
                     // Update the BindingSource
                     selectedProduct.BarcodeNumber = productToUpdate.BarcodeNumber;
@@ -159,11 +212,11 @@ namespace PointOfSales2024
 
                     productViewModelBindingSource.ResetCurrentItem(); // Refresh the grid
 
-                    if(lblStatus.Text != "Status: Adding Stocks")
+                    if (lblStatus.Text != "Status: Adding Stocks")
                     {
                         ClearFields();
                         //return;
-                    
+
 
                     }
                     else
@@ -171,8 +224,8 @@ namespace PointOfSales2024
                         clearStocksAdding();// for adding of stocks
 
                     }
-                   
-                    MessageBox.Show("Record updated Successfully");
+
+                    MessageBox.Show("Record updated Successfully", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
 
@@ -180,11 +233,11 @@ namespace PointOfSales2024
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Error message : {ex.Message}");
+                MessageBox.Show($"Error message : {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
-      
+
         private void clearStocksAdding()
         {
             txt_quantity.Text = "0";
@@ -197,15 +250,15 @@ namespace PointOfSales2024
             {
                 if (txt_productName.Text == "")
                 {
-                    MessageBox.Show("Please select a product you want to add a stocks.");
+                    MessageBox.Show("Please select a product you want to add a stocks.", "Select", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (txt_quantity.Text == "" || txt_quantity.Text == "0")
                 {
-                    MessageBox.Show("You can't add an empty stock. Please enter a valid stocks to proceed");
+                    MessageBox.Show("You can't add an empty stock. Please enter a valid stocks to proceed", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-           
+
                 Update();//Addstocks condition inside.
                 //MessageBox.Show("Add Stocks here.");
                 return;
@@ -213,7 +266,7 @@ namespace PointOfSales2024
 
             if (btn_save.Text != "Save")
             {
-                Update();
+                Update(); // Update if the button name is not save.
                 return;
             }
 
@@ -261,7 +314,7 @@ namespace PointOfSales2024
             }
 
 
-            if (MessageBox.Show("Are you sure you want to delete this record ?", "Delete ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to delete this product? Deleting the product may result to deleted related sales and added stocks. Continue?", "Delete ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
 
 
@@ -277,7 +330,7 @@ namespace PointOfSales2024
                     // Remove the product from the BindingSource
                     productViewModelBindingSource.Remove(selectedProduct);
                     ClearFields();
-                    MessageBox.Show("Product deleted successfully.");
+                    MessageBox.Show("Product deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
             }
@@ -319,11 +372,12 @@ namespace PointOfSales2024
                 btn_save.Text = "Update";
                 txt_quantity.Enabled = false; //Disabled because we can't update a quantity we instead add a stocks.
 
-                
+
             }
             else
             {
                 txt_quantity.Text = "0";
+                txt_quantity.Focus();
             }
 
         }
@@ -401,6 +455,12 @@ namespace PointOfSales2024
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private async void btnRefresh_Click(object sender, EventArgs e)
+        {
+            //base.OnLoad(e);
+            await LoadProductAsync();
         }
     }
 }

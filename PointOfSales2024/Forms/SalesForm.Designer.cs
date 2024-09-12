@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             dtTo = new DateTimePicker();
             dtFrom = new DateTimePicker();
@@ -43,18 +40,20 @@
             btnDelete = new Button();
             lbltotalSales = new Label();
             dataGridView1 = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
             orderIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            ProductId = new DataGridViewTextBoxColumn();
             productNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             productBarcodeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             Price = new DataGridViewTextBoxColumn();
-            orderQuantityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            OrderQuantity = new DataGridViewTextBoxColumn();
             OverallPrice = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            transactedByDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            dateTimeTransactedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             Cash = new DataGridViewTextBoxColumn();
             salesViewModelBindingSource = new BindingSource(components);
             bannerTextProvider1 = new Syncfusion.Windows.Forms.BannerTextProvider(components);
+            label4 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -70,7 +69,7 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(12, 0);
+            groupBox1.Location = new Point(12, 45);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(1094, 178);
             groupBox1.TabIndex = 0;
@@ -137,9 +136,9 @@
             groupBox2.Controls.Add(btnDelete);
             groupBox2.Controls.Add(lbltotalSales);
             groupBox2.Controls.Add(dataGridView1);
-            groupBox2.Location = new Point(12, 184);
+            groupBox2.Location = new Point(12, 229);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1094, 574);
+            groupBox2.Size = new Size(1094, 529);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             // 
@@ -159,7 +158,7 @@
             lbltotalSales.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             lbltotalSales.AutoSize = true;
             lbltotalSales.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbltotalSales.Location = new Point(6, 537);
+            lbltotalSales.Location = new Point(6, 492);
             lbltotalSales.Name = "lbltotalSales";
             lbltotalSales.Size = new Size(85, 21);
             lbltotalSales.TabIndex = 8;
@@ -172,22 +171,22 @@
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, orderIdDataGridViewTextBoxColumn, productNameDataGridViewTextBoxColumn, productBarcodeDataGridViewTextBoxColumn, Price, orderQuantityDataGridViewTextBoxColumn, OverallPrice, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Cash });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, orderIdDataGridViewTextBoxColumn, ProductId, productNameDataGridViewTextBoxColumn, productBarcodeDataGridViewTextBoxColumn, Price, OrderQuantity, OverallPrice, transactedByDataGridViewTextBoxColumn, dateTimeTransactedDataGridViewTextBoxColumn, Cash });
             dataGridView1.DataSource = salesViewModelBindingSource;
             dataGridView1.Location = new Point(6, 52);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1082, 457);
+            dataGridView1.Size = new Size(1082, 412);
             dataGridView1.TabIndex = 0;
             // 
-            // idDataGridViewTextBoxColumn
+            // Id
             // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            idDataGridViewTextBoxColumn.HeaderText = "Id";
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
-            idDataGridViewTextBoxColumn.Visible = false;
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
             // 
             // orderIdDataGridViewTextBoxColumn
             // 
@@ -196,6 +195,14 @@
             orderIdDataGridViewTextBoxColumn.HeaderText = "Order Id";
             orderIdDataGridViewTextBoxColumn.Name = "orderIdDataGridViewTextBoxColumn";
             orderIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ProductId
+            // 
+            ProductId.DataPropertyName = "ProductId";
+            ProductId.HeaderText = "ProductId";
+            ProductId.Name = "ProductId";
+            ProductId.ReadOnly = true;
+            ProductId.Visible = false;
             // 
             // productNameDataGridViewTextBoxColumn
             // 
@@ -217,54 +224,46 @@
             // 
             Price.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Price.DataPropertyName = "Price";
-            dataGridViewCellStyle1.Format = "C2";
-            dataGridViewCellStyle1.NullValue = null;
-            Price.DefaultCellStyle = dataGridViewCellStyle1;
             Price.HeaderText = "Price";
             Price.Name = "Price";
             Price.ReadOnly = true;
             // 
-            // orderQuantityDataGridViewTextBoxColumn
+            // OrderQuantity
             // 
-            orderQuantityDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            orderQuantityDataGridViewTextBoxColumn.DataPropertyName = "OrderQuantity";
-            orderQuantityDataGridViewTextBoxColumn.HeaderText = "Order Quantity";
-            orderQuantityDataGridViewTextBoxColumn.Name = "orderQuantityDataGridViewTextBoxColumn";
-            orderQuantityDataGridViewTextBoxColumn.ReadOnly = true;
+            OrderQuantity.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            OrderQuantity.DataPropertyName = "OrderQuantity";
+            OrderQuantity.HeaderText = "Order Quantity";
+            OrderQuantity.Name = "OrderQuantity";
+            OrderQuantity.ReadOnly = true;
             // 
             // OverallPrice
             // 
             OverallPrice.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             OverallPrice.DataPropertyName = "OverallPrice";
-            dataGridViewCellStyle2.Format = "C2";
-            dataGridViewCellStyle2.NullValue = null;
-            OverallPrice.DefaultCellStyle = dataGridViewCellStyle2;
             OverallPrice.HeaderText = "Overall Price";
             OverallPrice.Name = "OverallPrice";
             OverallPrice.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn1
+            // transactedByDataGridViewTextBoxColumn
             // 
-            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn1.DataPropertyName = "TransactedBy";
-            dataGridViewTextBoxColumn1.HeaderText = "Transacted By";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
+            transactedByDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            transactedByDataGridViewTextBoxColumn.DataPropertyName = "TransactedBy";
+            transactedByDataGridViewTextBoxColumn.HeaderText = "Transacted By";
+            transactedByDataGridViewTextBoxColumn.Name = "transactedByDataGridViewTextBoxColumn";
+            transactedByDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn2
+            // dateTimeTransactedDataGridViewTextBoxColumn
             // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn2.DataPropertyName = "DateTimeTransacted";
-            dataGridViewTextBoxColumn2.HeaderText = "Date Time Transacted";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dateTimeTransactedDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dateTimeTransactedDataGridViewTextBoxColumn.DataPropertyName = "DateTimeTransacted";
+            dateTimeTransactedDataGridViewTextBoxColumn.HeaderText = "Date Time Transacted";
+            dateTimeTransactedDataGridViewTextBoxColumn.Name = "dateTimeTransactedDataGridViewTextBoxColumn";
+            dateTimeTransactedDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // Cash
             // 
             Cash.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Cash.DataPropertyName = "Cash";
-            dataGridViewCellStyle3.Format = "C2";
-            Cash.DefaultCellStyle = dataGridViewCellStyle3;
             Cash.HeaderText = "Cash";
             Cash.Name = "Cash";
             Cash.ReadOnly = true;
@@ -273,11 +272,22 @@
             // 
             salesViewModelBindingSource.DataSource = typeof(ViewModel.SalesViewModel);
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Century Gothic", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(12, 8);
+            label4.Name = "label4";
+            label4.Size = new Size(267, 28);
+            label4.TabIndex = 9;
+            label4.Text = "Sales Monitoring Form";
+            // 
             // SalesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1110, 770);
+            Controls.Add(label4);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "SalesForm";
@@ -292,6 +302,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)salesViewModelBindingSource).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -303,23 +314,23 @@
         private Label label2;
         private Label label1;
         private Button btnSearch;
-        private DataGridViewTextBoxColumn transactedByDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn dateTimeTransactedDataGridViewTextBoxColumn;
         private BindingSource salesViewModelBindingSource;
         private Syncfusion.Windows.Forms.BannerTextProvider bannerTextProvider1;
         private DateTimePicker dtFrom;
         private DateTimePicker dtTo;
         private Label lbltotalSales;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private Button btnDelete;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn orderIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn ProductId;
         private DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn productBarcodeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn Price;
-        private DataGridViewTextBoxColumn orderQuantityDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn OrderQuantity;
         private DataGridViewTextBoxColumn OverallPrice;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn transactedByDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn dateTimeTransactedDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn Cash;
-        private Button btnDelete;
+        private Label label4;
     }
 }

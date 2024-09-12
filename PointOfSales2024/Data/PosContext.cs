@@ -20,12 +20,25 @@ public class PosContext : DbContext
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<AddedStock> AddedStocks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //modelBuilder.Entity<Product>()
         //.HasIndex(p => new { p.ProductName})
         //.IsUnique();
+        modelBuilder.Entity<AddedStock>()
+            .HasOne(a => a.AppUser)
+            .WithMany(ad => ad.AddedStocks)
+            .HasForeignKey(ad => ad.AppUserId)
+            .HasPrincipalKey(a => a.AppUserId);
+
+        modelBuilder.Entity<AddedStock>()
+            .HasOne(p => p.Product)
+            .WithMany(a => a.AddedStocks)
+            .HasForeignKey(a => a.ProductId)
+            .HasPrincipalKey(a => a.Id);
+
         modelBuilder.Entity<Order>()
             .HasOne(p => p.Product)
             .WithMany(o => o.Orders)
