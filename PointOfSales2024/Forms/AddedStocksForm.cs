@@ -9,9 +9,19 @@ namespace PointOfSales2024.Forms
 {
     public partial class AddedStocksForm : Form
     {
-        public AddedStocksForm()
+        public bool _isAdmin;
+        public AddedStocksForm(bool isAdmin)
         {
             InitializeComponent();
+
+            _isAdmin = isAdmin;
+
+            if (_isAdmin != true)
+            {
+                button1.Visible = false;
+            }
+
+
         }
 
         private async void AddedStocksForm_Load(object sender, EventArgs e)

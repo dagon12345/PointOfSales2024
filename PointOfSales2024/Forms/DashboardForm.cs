@@ -2,9 +2,26 @@
 {
     public partial class DashboardForm : Form
     {
-        public DashboardForm()
+        public string _Name;
+        public bool _IsAdmin;
+        public int _appUserId;
+        public DashboardForm(string name, bool IsAdmin, int appUserId)
         {
             InitializeComponent();
+
+            _Name = name;
+            _IsAdmin = IsAdmin;
+            _appUserId = appUserId; 
+
+            txtName.Text = $"Welcome: {_Name}";
+            txtRole.Text = $"Administrator Role: {_IsAdmin}";
+
+
+            if(_IsAdmin != true )
+            {
+                registerUsersToolStripMenuItem.Visible = false;
+            }
+
         }
 
 
@@ -25,7 +42,7 @@
             }
             else
             {
-                productForm = new ProductForm();
+                productForm = new ProductForm(_Name, _IsAdmin, _appUserId);
                 productForm.ShowDialog();
 
             }
@@ -38,7 +55,7 @@
         {
             if (_transactionFormCurrentInstance == null)
             {
-                _transactionFormCurrentInstance = new TransactionForm();
+                _transactionFormCurrentInstance = new TransactionForm(_Name, _IsAdmin, _appUserId);
                 _transactionFormCurrentInstance.FormClosed += instanceHasBeenClosed;
                 _transactionFormCurrentInstance.Show();
             }
@@ -50,7 +67,7 @@
         {
             if (_salesFormCurrentInstance == null)
             {
-                _salesFormCurrentInstance = new SalesForm();
+                _salesFormCurrentInstance = new SalesForm(_IsAdmin);
                 _salesFormCurrentInstance.FormClosed += instanceHasBeenClosed;
                 _salesFormCurrentInstance.Show();
             }
@@ -80,7 +97,7 @@
             }
             else
             {
-                productForm = new ProductForm();
+                productForm = new ProductForm(_Name, _IsAdmin, _appUserId);
                 clicked();
                 productForm.ShowDialog();
 
@@ -97,12 +114,42 @@
             }
             else
             {
-                addedStocksForm = new AddedStocksForm();
-              //  clicked();
+                addedStocksForm = new AddedStocksForm(_IsAdmin);
+                //  clicked();
                 addedStocksForm.Show();
 
             }
 
+
+        }
+
+        private void DashboardForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+
+            this.Hide();
+        }
+
+        RegisterForm registerForm;
+        private void registerUsersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.OfType<RegisterForm>().Any())
+            {
+                registerForm.Select();
+                registerForm.BringToFront();
+            }
+            else
+            {
+                registerForm = new RegisterForm();
+                //  clicked();
+                registerForm.ShowDialog();
+
+            }
+        }
+
+        private void DashboardForm_Load(object sender, EventArgs e)
+        {
 
         }
     }

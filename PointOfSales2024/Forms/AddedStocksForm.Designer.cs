@@ -30,14 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             dgAddedStocks = new DataGridView();
-            Id = new DataGridViewTextBoxColumn();
-            ProductId = new DataGridViewTextBoxColumn();
-            barcodeNumberDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            productNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            Price = new DataGridViewTextBoxColumn();
-            addedByDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            QuantityAdded = new DataGridViewTextBoxColumn();
-            dateAddedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             addedStocksViewModelBindingSource = new BindingSource(components);
             groupBox1 = new GroupBox();
             dtTo = new DateTimePicker();
@@ -49,6 +41,14 @@
             button1 = new Button();
             lblQuantity = new Label();
             label4 = new Label();
+            Id = new DataGridViewTextBoxColumn();
+            ProductId = new DataGridViewTextBoxColumn();
+            barcodeNumberDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            productNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            Price = new DataGridViewTextBoxColumn();
+            addedByDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            QuantityAdded = new DataGridViewTextBoxColumn();
+            dateAddedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgAddedStocks).BeginInit();
             ((System.ComponentModel.ISupportInitialize)addedStocksViewModelBindingSource).BeginInit();
             groupBox1.SuspendLayout();
@@ -69,68 +69,6 @@
             dgAddedStocks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgAddedStocks.Size = new Size(1082, 389);
             dgAddedStocks.TabIndex = 0;
-            // 
-            // Id
-            // 
-            Id.DataPropertyName = "Id";
-            Id.HeaderText = "Id";
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            // 
-            // ProductId
-            // 
-            ProductId.DataPropertyName = "ProductId";
-            ProductId.HeaderText = "ProductId";
-            ProductId.Name = "ProductId";
-            ProductId.ReadOnly = true;
-            // 
-            // barcodeNumberDataGridViewTextBoxColumn
-            // 
-            barcodeNumberDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            barcodeNumberDataGridViewTextBoxColumn.DataPropertyName = "BarcodeNumber";
-            barcodeNumberDataGridViewTextBoxColumn.HeaderText = "BarcodeNumber";
-            barcodeNumberDataGridViewTextBoxColumn.Name = "barcodeNumberDataGridViewTextBoxColumn";
-            barcodeNumberDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            productNameDataGridViewTextBoxColumn.HeaderText = "ProductName";
-            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            productNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Price
-            // 
-            Price.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Price.DataPropertyName = "Price";
-            Price.HeaderText = "Price";
-            Price.Name = "Price";
-            Price.ReadOnly = true;
-            // 
-            // addedByDataGridViewTextBoxColumn
-            // 
-            addedByDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            addedByDataGridViewTextBoxColumn.DataPropertyName = "AddedBy";
-            addedByDataGridViewTextBoxColumn.HeaderText = "AddedBy";
-            addedByDataGridViewTextBoxColumn.Name = "addedByDataGridViewTextBoxColumn";
-            addedByDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // QuantityAdded
-            // 
-            QuantityAdded.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            QuantityAdded.DataPropertyName = "QuantityAdded";
-            QuantityAdded.HeaderText = "QuantityAdded";
-            QuantityAdded.Name = "QuantityAdded";
-            QuantityAdded.ReadOnly = true;
-            // 
-            // dateAddedDataGridViewTextBoxColumn
-            // 
-            dateAddedDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dateAddedDataGridViewTextBoxColumn.DataPropertyName = "DateAdded";
-            dateAddedDataGridViewTextBoxColumn.HeaderText = "DateAdded";
-            dateAddedDataGridViewTextBoxColumn.Name = "dateAddedDataGridViewTextBoxColumn";
-            dateAddedDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // addedStocksViewModelBindingSource
             // 
@@ -237,6 +175,70 @@
             label4.TabIndex = 8;
             label4.Text = "Added Stocks Inventory";
             // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // ProductId
+            // 
+            ProductId.DataPropertyName = "ProductId";
+            ProductId.HeaderText = "ProductId";
+            ProductId.Name = "ProductId";
+            ProductId.ReadOnly = true;
+            ProductId.Visible = false;
+            // 
+            // barcodeNumberDataGridViewTextBoxColumn
+            // 
+            barcodeNumberDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            barcodeNumberDataGridViewTextBoxColumn.DataPropertyName = "BarcodeNumber";
+            barcodeNumberDataGridViewTextBoxColumn.HeaderText = "BarcodeNumber";
+            barcodeNumberDataGridViewTextBoxColumn.Name = "barcodeNumberDataGridViewTextBoxColumn";
+            barcodeNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            productNameDataGridViewTextBoxColumn.HeaderText = "ProductName";
+            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Price
+            // 
+            Price.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Price.DataPropertyName = "Price";
+            Price.HeaderText = "Price";
+            Price.Name = "Price";
+            Price.ReadOnly = true;
+            // 
+            // addedByDataGridViewTextBoxColumn
+            // 
+            addedByDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            addedByDataGridViewTextBoxColumn.DataPropertyName = "AddedBy";
+            addedByDataGridViewTextBoxColumn.HeaderText = "AddedBy";
+            addedByDataGridViewTextBoxColumn.Name = "addedByDataGridViewTextBoxColumn";
+            addedByDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // QuantityAdded
+            // 
+            QuantityAdded.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            QuantityAdded.DataPropertyName = "QuantityAdded";
+            QuantityAdded.HeaderText = "QuantityAdded";
+            QuantityAdded.Name = "QuantityAdded";
+            QuantityAdded.ReadOnly = true;
+            // 
+            // dateAddedDataGridViewTextBoxColumn
+            // 
+            dateAddedDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dateAddedDataGridViewTextBoxColumn.DataPropertyName = "DateAdded";
+            dateAddedDataGridViewTextBoxColumn.HeaderText = "DateAdded";
+            dateAddedDataGridViewTextBoxColumn.Name = "dateAddedDataGridViewTextBoxColumn";
+            dateAddedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // AddedStocksForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -273,6 +275,7 @@
         private Label label1;
         private Button button1;
         private Label lblQuantity;
+        private Label label4;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn ProductId;
         private DataGridViewTextBoxColumn barcodeNumberDataGridViewTextBoxColumn;
@@ -281,6 +284,5 @@
         private DataGridViewTextBoxColumn addedByDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn QuantityAdded;
         private DataGridViewTextBoxColumn dateAddedDataGridViewTextBoxColumn;
-        private Label label4;
     }
 }

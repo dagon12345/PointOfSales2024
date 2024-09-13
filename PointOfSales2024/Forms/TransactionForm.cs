@@ -12,7 +12,10 @@ namespace PointOfSales2024.Forms
     {
         private PosContext _dbContext;
         private Order _order;
-        public TransactionForm()
+        public string _Name;
+        public bool _IsAdmin;
+        public int _appUserId;
+        public TransactionForm(string name, bool isAdmin, int appUserId)
         {
             InitializeComponent();
             _dbContext = new PosContext();
@@ -24,6 +27,9 @@ namespace PointOfSales2024.Forms
             this.KeyDown += btnTransact_KeyDown;
             searchProductToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
 
+            _Name = name;
+            _IsAdmin = isAdmin; 
+            _appUserId = appUserId;
 
         }
 
@@ -537,7 +543,7 @@ namespace PointOfSales2024.Forms
                             OrderQuantity = quantity,
                             OverallPrice = orderOverallPrice,
                             Cash = cash,
-                            AppUserId = 1,
+                            AppUserId = _appUserId,
                             DateTimeTransacted = DateTime.Now
                         };
                         //Add the order to the context

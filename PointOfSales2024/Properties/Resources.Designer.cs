@@ -59,5 +59,75 @@ namespace PointOfSales2024.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _2303181_bar_chart_diagram_line_report_icon {
+            get {
+                object obj = ResourceManager.GetObject("2303181_bar_chart_diagram_line_report_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _299068_add_sign_icon {
+            get {
+                object obj = ResourceManager.GetObject("299068_add_sign_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _49364_box_crate_delivery_entrega_inventory_icon {
+            get {
+                object obj = ResourceManager.GetObject("49364_box_crate_delivery_entrega_inventory_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _7341111_e_commerce_online_shopping_ui_box_package_icon {
+            get {
+                object obj = ResourceManager.GetObject("7341111_e-commerce_online_shopping_ui_box package_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Espina_POS {
+            get {
+                object obj = ResourceManager.GetObject("Espina POS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_approved_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-approved-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_verify_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-verify-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

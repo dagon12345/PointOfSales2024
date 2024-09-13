@@ -13,11 +13,20 @@ namespace PointOfSales2024.Forms
     {
 
         private PosContext _dbContext;
-
-        public SalesForm()
+        public bool _isAdmin;
+        public SalesForm(bool isAdmin)
         {
             InitializeComponent();
             _dbContext = new PosContext();
+
+
+            _isAdmin = isAdmin;
+
+            if(_isAdmin != true )
+            {
+                btnDelete.Visible = false;
+            }
+
 
         }
 

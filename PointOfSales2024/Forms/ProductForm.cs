@@ -12,10 +12,24 @@ namespace PointOfSales2024
         private Product? _product;
         private ProductViewModel _productViewModel;
         private AddedStock _stock;
-        public ProductForm()
+        public string _Name;
+        public bool _IsAdmin;
+        public int _appUserId;
+        public ProductForm(string name, bool isAdmin, int appUserId)
         {
             InitializeComponent();
             txt_barcodenumber.Focus();
+
+            _Name = name;
+            _IsAdmin = isAdmin;
+            _appUserId = appUserId;
+
+
+            if (_IsAdmin != true)
+            {
+                btn_remove.Visible = false;
+            }
+      
         }
 
 
@@ -75,8 +89,8 @@ namespace PointOfSales2024
 
         private void Save()
         {
-            try
-            {
+            //try
+            //{
                 /*Instead of getting data from database, we used the refresh grid same reflected as what we've added 
             into our database.*/
                 if (txt_productName.Text == "")
@@ -94,7 +108,7 @@ namespace PointOfSales2024
                     Quantity = Convert.ToInt32(txt_quantity.Text),
                     Price = Convert.ToDouble(txt_price.Text),
                     //Profit = Convert.ToDouble(txt_profit.Text),
-                    AppUserId = 1, // or get this dynamically/ we will use this later when we create login
+                    AppUserId = _appUserId, // or get this dynamically/ we will use this later when we create login
                     DateAdded = DateTime.Now
                 };
 
@@ -112,7 +126,7 @@ namespace PointOfSales2024
                     ProductId = _product.Id,
                     Quantity = quantity,
                     DateAdded = DateTime.Now,
-                    AppUserId = 1, // we can change this later once the login form is created.
+                    AppUserId = _appUserId, // we can change this later once the login form is created.
                 };
 
                 _dbContext.AddedStocks.Add(_stock); // Add the new product to the context
@@ -132,7 +146,7 @@ namespace PointOfSales2024
                     ProductName = _product.ProductName,
                     Quantity = _product.Quantity,
                     Price = _product.Price,
-                    AddedBy = "User Name",  // replace with actual user name/ we will use this later when we create login
+                    AddedBy = _Name,  // replace with actual user name/ we will use this later when we create login
                     DateAdded = _product.DateAdded
                 };
 
@@ -140,12 +154,12 @@ namespace PointOfSales2024
                 ClearFields();
                 MessageBox.Show("Product saved successfully.", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                MessageBox.Show($"Error message : {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    MessageBox.Show($"Error message : {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void Update()
@@ -197,7 +211,7 @@ namespace PointOfSales2024
                             ProductId = productId,
                             Quantity = quantity,
                             DateAdded = DateTime.Now,
-                            AppUserId = 1, // we can change this later once the login form is created.
+                            AppUserId = _appUserId, // we can change this later once the login form is created.
                         };
 
                         _dbContext.AddedStocks.Add(_stock); // Add the new product to the context
