@@ -18,9 +18,17 @@ namespace PointOfSales2024.Forms
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+
             using (var context = new PosContext())
             {
-                var loginForm = await context.AppUsers.Where(login => login.UserName == txtUsername.Text.ToLower() && login.Password == txtPassword.Text)
+
+      
+                    // Delete and Create database below.
+                   // await context.Database.EnsureDeletedAsync();
+                    await context.Database.EnsureCreatedAsync();
+
+
+                    var loginForm = await context.AppUsers.Where(login => login.UserName == txtUsername.Text.ToLower() && login.Password == txtPassword.Text)
                     .FirstOrDefaultAsync();
 
                 if (loginForm != null)

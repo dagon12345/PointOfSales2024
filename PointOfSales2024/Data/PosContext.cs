@@ -60,8 +60,8 @@ public class PosContext : DbContext
             .HasPrincipalKey(a => a.AppUserId);
 
         modelBuilder.Entity<AppUser>().HasData(
-            new AppUser { AppUserId = 1, Name = "Lance", UserName = "lauespina", Password = "admin", IsAdmin = true },
-            new AppUser { AppUserId = 2, Name = "Espina", UserName = "lauespina1", Password = "espina", IsAdmin = false });
+            new AppUser { AppUserId = 1, Name = "Lance", UserName = "admin", Password = "admin", IsAdmin = true },
+            new AppUser { AppUserId = 2, Name = "Espina", UserName = "user", Password = "user", IsAdmin = false });
 
         modelBuilder.Entity<Product>().HasData(
 
