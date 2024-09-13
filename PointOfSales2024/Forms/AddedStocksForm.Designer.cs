@@ -169,13 +169,18 @@
             // 
             // btnSearch
             // 
+            btnSearch.BackColor = Color.SeaGreen;
             btnSearch.Cursor = Cursors.Hand;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearch.ForeColor = Color.White;
             btnSearch.Location = new Point(154, 129);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(166, 33);
             btnSearch.TabIndex = 5;
             btnSearch.Text = "Search and Export";
-            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
             // 
             // label3
@@ -210,13 +215,17 @@
             // 
             // button1
             // 
+            button1.BackColor = Color.Crimson;
             button1.Cursor = Cursors.Hand;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.White;
             button1.Location = new Point(12, 247);
             button1.Name = "button1";
             button1.Size = new Size(40, 34);
             button1.TabIndex = 16;
             button1.Text = "X";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // lblQuantity
