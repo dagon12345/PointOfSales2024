@@ -2,7 +2,6 @@
 using PointOfSales2024.Data;
 using PointOfSales2024.Forms;
 using PointOfSales2024.ViewModel;
-using Syncfusion.WinForms.Input.Styles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

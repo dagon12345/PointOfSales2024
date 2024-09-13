@@ -10,11 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="pos.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="pos.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
     <PackageReference Include="SQLite.Interop.dll" Version="1.0.103" />
-    <PackageReference Include="Syncfusion.Core.WinForms" Version="26.2.11" />
-    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="26.2.11" />
   </ItemGroup>
 
   <ItemGroup>

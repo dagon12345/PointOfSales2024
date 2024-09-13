@@ -71,7 +71,7 @@ namespace PointOfSales2024
             {
 
                 // Delete and Create database below.
-                // await context.Database.EnsureDeletedAsync();
+                 //await context.Database.EnsureDeletedAsync();
                 await context.Database.EnsureCreatedAsync();
 
                 // Load the products from the database, including the related AppUser data

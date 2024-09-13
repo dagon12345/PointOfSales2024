@@ -52,7 +52,6 @@
             dateTimeTransactedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             Cash = new DataGridViewTextBoxColumn();
             salesViewModelBindingSource = new BindingSource(components);
-            bannerTextProvider1 = new Syncfusion.Windows.Forms.BannerTextProvider(components);
             label4 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -315,7 +314,6 @@
         private Label label1;
         private Button btnSearch;
         private BindingSource salesViewModelBindingSource;
-        private Syncfusion.Windows.Forms.BannerTextProvider bannerTextProvider1;
         private DateTimePicker dtFrom;
         private DateTimePicker dtTo;
         private Label lbltotalSales;
