@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             label1 = new Label();
             label2 = new Label();
             pictureBox1 = new PictureBox();
@@ -36,7 +37,6 @@
             btnLogin = new Button();
             label4 = new Label();
             label3 = new Label();
-            lblversion = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -89,13 +89,17 @@
             // 
             // btnLogin
             // 
-            btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLogin.BackColor = Color.SeaGreen;
+            btnLogin.FlatAppearance.BorderSize = 0;
+            btnLogin.FlatStyle = FlatStyle.Flat;
+            btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogin.ForeColor = Color.White;
             btnLogin.Location = new Point(210, 120);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(125, 30);
+            btnLogin.Size = new Size(182, 30);
             btnLogin.TabIndex = 2;
             btnLogin.Text = "Login";
-            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
             // label4
@@ -120,17 +124,6 @@
             label3.TabIndex = 3;
             label3.Text = "Welcome!";
             // 
-            // lblversion
-            // 
-            lblversion.AutoSize = true;
-            lblversion.Font = new Font("Segoe UI Light", 8.25F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblversion.ForeColor = Color.Black;
-            lblversion.Location = new Point(9, 167);
-            lblversion.Name = "lblversion";
-            lblversion.Size = new Size(41, 13);
-            lblversion.TabIndex = 4;
-            lblversion.Text = "Version";
-            // 
             // LoginForm
             // 
             AcceptButton = btnLogin;
@@ -138,7 +131,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(476, 189);
-            Controls.Add(lblversion);
             Controls.Add(label3);
             Controls.Add(label4);
             Controls.Add(btnLogin);
@@ -147,6 +139,7 @@
             Controls.Add(pictureBox1);
             Controls.Add(label2);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new Size(492, 228);
             MinimizeBox = false;
@@ -171,6 +164,5 @@
         private Button btnLogin;
         private Label label4;
         private Label label3;
-        private Label lblversion;
     }
 }
