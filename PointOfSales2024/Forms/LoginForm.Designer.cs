@@ -37,6 +37,7 @@
             btnLogin = new Button();
             label4 = new Label();
             label3 = new Label();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -124,6 +125,17 @@
             label3.TabIndex = 3;
             label3.Text = "Welcome!";
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semilight", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Black;
+            label5.Location = new Point(7, 166);
+            label5.Name = "label5";
+            label5.Size = new Size(86, 17);
+            label5.TabIndex = 4;
+            label5.Text = "Version 1.0.0.3";
+            // 
             // LoginForm
             // 
             AcceptButton = btnLogin;
@@ -131,6 +143,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(476, 189);
+            Controls.Add(label5);
             Controls.Add(label3);
             Controls.Add(label4);
             Controls.Add(btnLogin);
@@ -164,5 +177,6 @@
         private Button btnLogin;
         private Label label4;
         private Label label3;
+        private Label label5;
     }
 }
