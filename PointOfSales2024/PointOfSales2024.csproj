@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Content Include="pos.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

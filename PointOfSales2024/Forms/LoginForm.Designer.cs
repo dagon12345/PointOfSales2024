@@ -132,9 +132,9 @@
             label5.ForeColor = Color.Black;
             label5.Location = new Point(7, 166);
             label5.Name = "label5";
-            label5.Size = new Size(86, 17);
+            label5.Size = new Size(87, 17);
             label5.TabIndex = 4;
-            label5.Text = "Version 1.0.0.3";
+            label5.Text = "Version 1.0.0.4";
             // 
             // LoginForm
             // 
