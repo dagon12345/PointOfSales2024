@@ -29,10 +29,37 @@ namespace PointOfSales2024
             {
                 btn_remove.Visible = false;
             }
-      
+
         }
 
 
+        // Event handler to change row color based on quantity
+        private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Quantity")
+            {
+                if (e.Value != null && int.TryParse(e.Value.ToString(), out int quantity))
+                {
+                    if (quantity <= 10 && quantity >= 1)
+                    {
+                        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 223, 161); // Color #FADFA1
+                        return;
+                    }
+                    if(quantity == 0)
+                    {
+                        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(201, 104, 104); // Color #C96868
+
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    }
+
+
+                }
+            }
+
+        }
 
         //private BindingList<ProductViewModel> list = new BindingList<ProductViewModel>();
         private async Task LoadProductAsync()
@@ -73,6 +100,9 @@ namespace PointOfSales2024
                 productViewModelBindingSource.DataSource = productViewModels;
                 dataGridView1.DataSource = productViewModelBindingSource;
                 dataGridView1.ClearSelection();
+
+                //Subscribe to the CellFormating event
+                dataGridView1.CellFormatting += DataGridView1_CellFormatting;
             }
 
         }
@@ -82,77 +112,73 @@ namespace PointOfSales2024
             _dbContext = new PosContext();
             await LoadProductAsync();
         }
-        private async void Refresh()
-        {
-            await LoadProductAsync();
-        }
 
         private void Save()
         {
             //try
             //{
-                /*Instead of getting data from database, we used the refresh grid same reflected as what we've added 
-            into our database.*/
-                if (txt_productName.Text == "")
-                {
-                    MessageBox.Show("Please fill all the fields", "Fill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            /*Instead of getting data from database, we used the refresh grid same reflected as what we've added 
+        into our database.*/
+            if (txt_productName.Text == "")
+            {
+                MessageBox.Show("Please fill all the fields", "Fill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
 
-                _product = new Product
-                {
-                    IsBarcode = check_barcode.Checked,
-                    BarcodeNumber = txt_barcodenumber.Text,
-                    ProductName = txt_productName.Text,
-                    Quantity = Convert.ToInt32(txt_quantity.Text),
-                    Price = Convert.ToDouble(txt_price.Text),
-                    //Profit = Convert.ToDouble(txt_profit.Text),
-                    AppUserId = _appUserId, // or get this dynamically/ we will use this later when we create login
-                    DateAdded = DateTime.Now
-                };
+            _product = new Product
+            {
+                IsBarcode = check_barcode.Checked,
+                BarcodeNumber = txt_barcodenumber.Text,
+                ProductName = txt_productName.Text,
+                Quantity = Convert.ToInt32(txt_quantity.Text),
+                Price = Convert.ToDouble(txt_price.Text),
+                //Profit = Convert.ToDouble(txt_profit.Text),
+                AppUserId = _appUserId, // or get this dynamically/ we will use this later when we create login
+                DateAdded = DateTime.Now
+            };
 
-                _dbContext.Products.Add(_product); // Add the new product to the context
-                _dbContext.SaveChanges(); // Save changes to the database
-
-
-                //Add into AddedStock database.
-
-                int productId = Convert.ToInt32(lblProductId.Text);
-                int quantity = Convert.ToInt32(txt_quantity.Text);
-
-                _stock = new AddedStock
-                {
-                    ProductId = _product.Id,
-                    Quantity = quantity,
-                    DateAdded = DateTime.Now,
-                    AppUserId = _appUserId, // we can change this later once the login form is created.
-                };
-
-                _dbContext.AddedStocks.Add(_stock); // Add the new product to the context
+            _dbContext.Products.Add(_product); // Add the new product to the context
+            _dbContext.SaveChanges(); // Save changes to the database
 
 
-                _dbContext.SaveChanges(); // Save changes to the database
+            //Add into AddedStock database.
+
+            int productId = Convert.ToInt32(lblProductId.Text);
+            int quantity = Convert.ToInt32(txt_quantity.Text);
+
+            _stock = new AddedStock
+            {
+                ProductId = _product.Id,
+                Quantity = quantity,
+                DateAdded = DateTime.Now,
+                AppUserId = _appUserId, // we can change this later once the login form is created.
+            };
+
+            _dbContext.AddedStocks.Add(_stock); // Add the new product to the context
+
+
+            _dbContext.SaveChanges(); // Save changes to the database
 
 
 
 
-                // Add the new product to the BindingSource
-                var newProductViewModel = new ProductViewModel
-                {
-                    Id = _product.Id,
-                    IsBarcode = _product.IsBarcode,
-                    BarcodeNumber = _product.BarcodeNumber,
-                    ProductName = _product.ProductName,
-                    Quantity = _product.Quantity,
-                    Price = _product.Price,
-                    AddedBy = _Name,  // replace with actual user name/ we will use this later when we create login
-                    DateAdded = _product.DateAdded
-                };
+            // Add the new product to the BindingSource
+            var newProductViewModel = new ProductViewModel
+            {
+                Id = _product.Id,
+                IsBarcode = _product.IsBarcode,
+                BarcodeNumber = _product.BarcodeNumber,
+                ProductName = _product.ProductName,
+                Quantity = _product.Quantity,
+                Price = _product.Price,
+                AddedBy = _Name,  // replace with actual user name/ we will use this later when we create login
+                DateAdded = _product.DateAdded
+            };
 
-                productViewModelBindingSource.Add(newProductViewModel);
-                ClearFields();
-                MessageBox.Show("Product saved successfully.", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            productViewModelBindingSource.Add(newProductViewModel);
+            ClearFields();
+            MessageBox.Show("Product saved successfully.", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //}
             //catch (Exception ex)
