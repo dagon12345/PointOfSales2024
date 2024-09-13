@@ -11,11 +11,52 @@ public class PosContext : DbContext
     {
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      => optionsBuilder.UseSqlite("Data Source=pos.db")
-        .LogTo(Console.WriteLine, LogLevel.Information);
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //  => optionsBuilder.UseSqlite("Data Source=pos.db")
+    //    .LogTo(Console.WriteLine, LogLevel.Information);
 
-    
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // Use Application Data directory for storing the database. THis is located and created into C:\Users\<Username>\AppData\Roaming
+
+        string databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "POSDatabase", "pos.db");
+
+        // Ensure the directory exists
+        Directory.CreateDirectory(Path.GetDirectoryName(databasePath));
+
+        try
+        {
+            // Check if the database file exists
+            if (!File.Exists(databasePath))
+            {
+                // Copy the database from the application's installation directory if necessary
+                string sourcePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pos.db");
+
+                if (File.Exists(sourcePath))
+                {
+                    File.Copy(sourcePath, databasePath);
+                }
+                else
+                {
+                    // Initialize or create a new database if the source file does not exist
+                    // For example, create a new empty database or log an error
+                }
+            }
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            // Handle access denied exceptions
+            Console.WriteLine($"Access denied: {ex.Message}");
+            // Inform the user or log the error
+        }
+
+        // Configure the DbContext to use the SQLite database
+        optionsBuilder.UseSqlite($"Data Source={databasePath}")
+            .LogTo(Console.WriteLine, LogLevel.Information);
+    }
+
+
 
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Product> Products { get; set; }
