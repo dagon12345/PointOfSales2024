@@ -63,7 +63,7 @@
             // checkAdmin
             // 
             checkAdmin.AutoSize = true;
-            checkAdmin.Location = new Point(13, 247);
+            checkAdmin.Location = new Point(24, 246);
             checkAdmin.Name = "checkAdmin";
             checkAdmin.Size = new Size(96, 19);
             checkAdmin.TabIndex = 4;
@@ -72,18 +72,23 @@
             // 
             // btnRegister
             // 
-            btnRegister.Location = new Point(13, 272);
+            btnRegister.BackColor = Color.SeaGreen;
+            btnRegister.FlatAppearance.BorderSize = 0;
+            btnRegister.FlatStyle = FlatStyle.Flat;
+            btnRegister.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRegister.ForeColor = Color.White;
+            btnRegister.Location = new Point(24, 271);
             btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(140, 32);
+            btnRegister.Size = new Size(250, 32);
             btnRegister.TabIndex = 5;
             btnRegister.Text = "Register";
-            btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.UseVisualStyleBackColor = false;
             btnRegister.Click += btnRegister_Click;
             // 
             // txtFullname
             // 
             txtFullname.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtFullname.Location = new Point(13, 38);
+            txtFullname.Location = new Point(24, 37);
             txtFullname.Name = "txtFullname";
             txtFullname.Size = new Size(250, 23);
             txtFullname.TabIndex = 0;
@@ -92,7 +97,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(13, 15);
+            label4.Location = new Point(24, 14);
             label4.Name = "label4";
             label4.Size = new Size(79, 20);
             label4.TabIndex = 9;
@@ -101,7 +106,7 @@
             // txtPass
             // 
             txtPass.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtPass.Location = new Point(13, 158);
+            txtPass.Location = new Point(24, 157);
             txtPass.Name = "txtPass";
             txtPass.Size = new Size(250, 23);
             txtPass.TabIndex = 2;
@@ -111,7 +116,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(13, 135);
+            label3.Location = new Point(24, 134);
             label3.Name = "label3";
             label3.Size = new Size(79, 20);
             label3.TabIndex = 6;
@@ -120,7 +125,7 @@
             // txtConfirmPassword
             // 
             txtConfirmPassword.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtConfirmPassword.Location = new Point(13, 217);
+            txtConfirmPassword.Location = new Point(24, 216);
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.Size = new Size(250, 23);
             txtConfirmPassword.TabIndex = 3;
@@ -129,7 +134,7 @@
             // txtUsername
             // 
             txtUsername.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtUsername.Location = new Point(13, 98);
+            txtUsername.Location = new Point(24, 97);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(250, 23);
             txtUsername.TabIndex = 1;
@@ -138,7 +143,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(13, 194);
+            label2.Location = new Point(24, 193);
             label2.Name = "label2";
             label2.Size = new Size(140, 20);
             label2.TabIndex = 3;
@@ -148,7 +153,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(13, 75);
+            label1.Location = new Point(24, 74);
             label1.Name = "label1";
             label1.Size = new Size(83, 20);
             label1.TabIndex = 4;
