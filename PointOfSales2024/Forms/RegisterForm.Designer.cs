@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterForm));
             groupBox1 = new GroupBox();
             checkAdmin = new CheckBox();
             btnRegister = new Button();
@@ -166,6 +167,7 @@
             BackColor = Color.White;
             ClientSize = new Size(329, 334);
             Controls.Add(groupBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new Size(345, 373);
             MinimizeBox = false;

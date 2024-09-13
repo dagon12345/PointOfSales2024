@@ -31,6 +31,7 @@ namespace PointOfSales2024
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductForm));
             btn_save = new Button();
             check_barcode = new CheckBox();
             txt_barcodenumber = new TextBox();
@@ -44,13 +45,6 @@ namespace PointOfSales2024
             label5 = new Label();
             btn_remove = new Button();
             dataGridView1 = new DataGridView();
-            productViewModelBindingSource = new BindingSource(components);
-            txt_search = new TextBox();
-            label2 = new Label();
-            lblProductId = new Label();
-            label6 = new Label();
-            lblStatus = new Label();
-            btnRefresh = new Button();
             Id = new DataGridViewTextBoxColumn();
             isBarcodeDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             barcodeNumberDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -59,6 +53,13 @@ namespace PointOfSales2024
             priceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddedBy = new DataGridViewTextBoxColumn();
             dateAddedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            productViewModelBindingSource = new BindingSource(components);
+            txt_search = new TextBox();
+            label2 = new Label();
+            lblProductId = new Label();
+            label6 = new Label();
+            lblStatus = new Label();
+            btnRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)productBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productViewModelBindingSource).BeginInit();
@@ -191,6 +192,72 @@ namespace PointOfSales2024
             dataGridView1.TabIndex = 7;
             dataGridView1.Click += dataGridView1_Click;
             // 
+            // Id
+            // 
+            Id.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // isBarcodeDataGridViewCheckBoxColumn
+            // 
+            isBarcodeDataGridViewCheckBoxColumn.DataPropertyName = "IsBarcode";
+            isBarcodeDataGridViewCheckBoxColumn.HeaderText = "Barcode";
+            isBarcodeDataGridViewCheckBoxColumn.Name = "isBarcodeDataGridViewCheckBoxColumn";
+            isBarcodeDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // barcodeNumberDataGridViewTextBoxColumn
+            // 
+            barcodeNumberDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            barcodeNumberDataGridViewTextBoxColumn.DataPropertyName = "BarcodeNumber";
+            barcodeNumberDataGridViewTextBoxColumn.HeaderText = "Barcode Number";
+            barcodeNumberDataGridViewTextBoxColumn.Name = "barcodeNumberDataGridViewTextBoxColumn";
+            barcodeNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            productNameDataGridViewTextBoxColumn.HeaderText = "Product Name";
+            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Quantity
+            // 
+            Quantity.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Quantity.DataPropertyName = "Quantity";
+            Quantity.HeaderText = "Quantity";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            Quantity.Width = 78;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            priceDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            priceDataGridViewTextBoxColumn.HeaderText = "Price";
+            priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            priceDataGridViewTextBoxColumn.ReadOnly = true;
+            priceDataGridViewTextBoxColumn.Width = 58;
+            // 
+            // AddedBy
+            // 
+            AddedBy.DataPropertyName = "AddedBy";
+            AddedBy.HeaderText = "Added By";
+            AddedBy.Name = "AddedBy";
+            AddedBy.ReadOnly = true;
+            // 
+            // dateAddedDataGridViewTextBoxColumn
+            // 
+            dateAddedDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dateAddedDataGridViewTextBoxColumn.DataPropertyName = "DateAdded";
+            dateAddedDataGridViewTextBoxColumn.HeaderText = "DateAdded";
+            dateAddedDataGridViewTextBoxColumn.Name = "dateAddedDataGridViewTextBoxColumn";
+            dateAddedDataGridViewTextBoxColumn.ReadOnly = true;
+            dateAddedDataGridViewTextBoxColumn.Width = 91;
+            // 
             // productViewModelBindingSource
             // 
             productViewModelBindingSource.DataSource = typeof(ViewModel.ProductViewModel);
@@ -258,77 +325,11 @@ namespace PointOfSales2024
             btnRefresh.UseVisualStyleBackColor = true;
             btnRefresh.Click += btnRefresh_Click;
             // 
-            // Id
-            // 
-            Id.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Id.DataPropertyName = "Id";
-            Id.HeaderText = "Id";
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            Id.Visible = false;
-            Id.Width = 42;
-            // 
-            // isBarcodeDataGridViewCheckBoxColumn
-            // 
-            isBarcodeDataGridViewCheckBoxColumn.DataPropertyName = "IsBarcode";
-            isBarcodeDataGridViewCheckBoxColumn.HeaderText = "Barcode";
-            isBarcodeDataGridViewCheckBoxColumn.Name = "isBarcodeDataGridViewCheckBoxColumn";
-            isBarcodeDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // barcodeNumberDataGridViewTextBoxColumn
-            // 
-            barcodeNumberDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            barcodeNumberDataGridViewTextBoxColumn.DataPropertyName = "BarcodeNumber";
-            barcodeNumberDataGridViewTextBoxColumn.HeaderText = "Barcode Number";
-            barcodeNumberDataGridViewTextBoxColumn.Name = "barcodeNumberDataGridViewTextBoxColumn";
-            barcodeNumberDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            productNameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            productNameDataGridViewTextBoxColumn.HeaderText = "Product Name";
-            productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            productNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Quantity
-            // 
-            Quantity.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Quantity.DataPropertyName = "Quantity";
-            Quantity.HeaderText = "Quantity";
-            Quantity.Name = "Quantity";
-            Quantity.ReadOnly = true;
-            Quantity.Width = 78;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            priceDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            priceDataGridViewTextBoxColumn.HeaderText = "Price";
-            priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            priceDataGridViewTextBoxColumn.ReadOnly = true;
-            priceDataGridViewTextBoxColumn.Width = 58;
-            // 
-            // AddedBy
-            // 
-            AddedBy.DataPropertyName = "AddedBy";
-            AddedBy.HeaderText = "Added By";
-            AddedBy.Name = "AddedBy";
-            AddedBy.ReadOnly = true;
-            // 
-            // dateAddedDataGridViewTextBoxColumn
-            // 
-            dateAddedDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dateAddedDataGridViewTextBoxColumn.DataPropertyName = "DateAdded";
-            dateAddedDataGridViewTextBoxColumn.HeaderText = "DateAdded";
-            dateAddedDataGridViewTextBoxColumn.Name = "dateAddedDataGridViewTextBoxColumn";
-            dateAddedDataGridViewTextBoxColumn.ReadOnly = true;
-            dateAddedDataGridViewTextBoxColumn.Width = 91;
-            // 
             // ProductForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(957, 677);
             Controls.Add(btnRefresh);
             Controls.Add(lblStatus);
@@ -348,6 +349,7 @@ namespace PointOfSales2024
             Controls.Add(txt_barcodenumber);
             Controls.Add(check_barcode);
             Controls.Add(btn_save);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ProductForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Product Form";

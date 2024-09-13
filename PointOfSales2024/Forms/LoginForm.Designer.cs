@@ -134,7 +134,7 @@
             label5.Name = "label5";
             label5.Size = new Size(87, 17);
             label5.TabIndex = 4;
-            label5.Text = "Version 1.0.0.8";
+            label5.Text = "Version 1.0.0.9";
             // 
             // LoginForm
             // 

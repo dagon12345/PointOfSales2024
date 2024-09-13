@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddedStocksForm));
             dgAddedStocks = new DataGridView();
             Id = new DataGridViewTextBoxColumn();
             ProductId = new DataGridViewTextBoxColumn();
@@ -60,6 +61,7 @@
             dgAddedStocks.AllowUserToDeleteRows = false;
             dgAddedStocks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgAddedStocks.AutoGenerateColumns = false;
+            dgAddedStocks.BackgroundColor = Color.White;
             dgAddedStocks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgAddedStocks.Columns.AddRange(new DataGridViewColumn[] { Id, ProductId, barcodeNumberDataGridViewTextBoxColumn, productNameDataGridViewTextBoxColumn, Price, addedByDataGridViewTextBoxColumn, QuantityAdded, dateAddedDataGridViewTextBoxColumn });
             dgAddedStocks.DataSource = addedStocksViewModelBindingSource;
@@ -260,6 +262,7 @@
             Controls.Add(button1);
             Controls.Add(groupBox1);
             Controls.Add(dgAddedStocks);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AddedStocksForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AddedStocksForm";

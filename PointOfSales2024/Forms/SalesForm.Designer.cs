@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesForm));
             groupBox1 = new GroupBox();
             dtTo = new DateTimePicker();
             dtFrom = new DateTimePicker();
@@ -90,13 +91,18 @@
             // 
             // btnSearch
             // 
+            btnSearch.BackColor = Color.SeaGreen;
             btnSearch.Cursor = Cursors.Hand;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearch.ForeColor = Color.White;
             btnSearch.Location = new Point(154, 129);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(166, 33);
             btnSearch.TabIndex = 5;
             btnSearch.Text = "Search and Export";
-            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
             // 
             // label3
@@ -143,13 +149,18 @@
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = Color.Crimson;
             btnDelete.Cursor = Cursors.Hand;
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDelete.ForeColor = Color.White;
             btnDelete.Location = new Point(6, 12);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(40, 34);
             btnDelete.TabIndex = 15;
             btnDelete.Text = "X";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // lbltotalSales
@@ -169,6 +180,7 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, orderIdDataGridViewTextBoxColumn, ProductId, productNameDataGridViewTextBoxColumn, productBarcodeDataGridViewTextBoxColumn, Price, OrderQuantity, OverallPrice, transactedByDataGridViewTextBoxColumn, dateTimeTransactedDataGridViewTextBoxColumn, Cash });
             dataGridView1.DataSource = salesViewModelBindingSource;
@@ -290,6 +302,7 @@
             Controls.Add(label4);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SalesForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SalesForm";
