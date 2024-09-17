@@ -45,7 +45,7 @@ namespace PointOfSales2024
                         dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 223, 161); // Color #FADFA1
                         return;
                     }
-                    if(quantity == 0)
+                    if (quantity == 0)
                     {
                         dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(201, 104, 104); // Color #C96868
 
@@ -60,6 +60,45 @@ namespace PointOfSales2024
             }
 
         }
+        private void CellsFormula()
+        {
+            double price = 0.0;
+            double quantity = 0.0;
+            double overallTotal = 0.0;
+            double totalAmount = 0.0;
+            //double amount = Convert.ToDouble(lblAmount.Text);
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+
+                price = Convert.ToDouble(row.Cells["Price"].Value);
+                quantity = Convert.ToDouble(row.Cells["Quantity"].Value);
+                overallTotal = Convert.ToDouble(row.Cells["OverallTotal"].Value);
+
+
+                overallTotal = quantity * price;
+                
+                //Update the Overall total cell with the calculated value.
+                row.Cells["OverallTotal"].Value = overallTotal;
+
+                totalAmount += overallTotal;
+
+                lblAmount.Text = $"Total amount entered: {totalAmount.ToString("C2", new System.Globalization.CultureInfo("en-PH"))}";
+;                
+            }
+            //Count the total number of producs from datagridView1.
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                lblCount.Text = $"Total Product entered: {i + 1}";
+            }
+
+            if(dataGridView1.Rows.Count == 0)
+            {
+                lblCount.Text = $"Total Product entered: 0";
+                lblAmount.Text = $"Total amount entered: 0";
+
+            }
+
+        }
 
         //private BindingList<ProductViewModel> list = new BindingList<ProductViewModel>();
         private async Task LoadProductAsync()
@@ -71,7 +110,7 @@ namespace PointOfSales2024
             {
 
                 // Delete and Create database below.
-                 //await context.Database.EnsureDeletedAsync();
+                //await context.Database.EnsureDeletedAsync();
                 //await context.Database.EnsureCreatedAsync();
 
                 // Load the products from the database, including the related AppUser data
@@ -96,9 +135,13 @@ namespace PointOfSales2024
 
                 }).ToList();
 
+
+
+
                 // Bind the product list to the DataGridView
                 productViewModelBindingSource.DataSource = productViewModels;
                 dataGridView1.DataSource = productViewModelBindingSource;
+                CellsFormula();
                 dataGridView1.ClearSelection();
 
                 //Subscribe to the CellFormating event
@@ -177,6 +220,7 @@ namespace PointOfSales2024
             };
 
             productViewModelBindingSource.Add(newProductViewModel);
+
             ClearFields();
             MessageBox.Show("Product saved successfully.", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -211,6 +255,7 @@ namespace PointOfSales2024
                     // Update the product in the database
                     var productToUpdate = _dbContext.Products.Find(selectedProductIdText);
 
+                    productToUpdate.IsBarcode = check_barcode.Checked;
                     productToUpdate.BarcodeNumber = txt_barcodenumber.Text;
                     productToUpdate.ProductName = txt_productName.Text;
                     if (btn_save.Text == "Add Stocks")
@@ -245,6 +290,7 @@ namespace PointOfSales2024
                     }
 
                     // Update the BindingSource
+                    selectedProduct.IsBarcode = productToUpdate.IsBarcode;
                     selectedProduct.BarcodeNumber = productToUpdate.BarcodeNumber;
                     selectedProduct.ProductName = productToUpdate.ProductName;
                     selectedProduct.Quantity = productToUpdate.Quantity;
@@ -309,9 +355,7 @@ namespace PointOfSales2024
                 Update(); // Update if the button name is not save.
                 return;
             }
-
-
-
+            // Save if no validation is meet above.
             Save();
         }
 
@@ -334,6 +378,7 @@ namespace PointOfSales2024
             txt_price.Clear();
             btn_save.Text = "Save";
             txt_quantity.Enabled = true;
+            CellsFormula();
             txt_barcodenumber.Focus();
 
 
@@ -501,6 +546,15 @@ namespace PointOfSales2024
         {
             //base.OnLoad(e);
             await LoadProductAsync();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to clear all the fields?", "Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ClearFields();
+            }
+
         }
     }
 }
