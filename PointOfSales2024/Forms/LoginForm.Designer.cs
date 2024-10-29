@@ -141,9 +141,9 @@
             label5.Location = new Point(-1, 175);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(79, 13);
+            label5.Size = new Size(78, 13);
             label5.TabIndex = 0;
-            label5.Text = "Version 1.2.0.0";
+            label5.Text = "Version 1.3.0.0";
             // 
             // btnUsers
             // 
