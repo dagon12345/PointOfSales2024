@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PointOfSales2024.Data;
+using PointOfSales2024.Popups;
 using System.Data;
 using System.Diagnostics;
 using System.IO.Compression;
@@ -22,14 +23,14 @@ namespace PointOfSales2024.Forms
             using (var context = new PosContext())
             {
 
-      
-                    // Delete and Create database below.
-                   // await context.Database.EnsureDeletedAsync();
-                    await context.Database.EnsureCreatedAsync();
+
+                // Delete and Create database below.
+                // await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
 
 
-                    var loginForm = await context.AppUsers.Where(login => login.UserName == txtUsername.Text.ToLower() && login.Password == txtPassword.Text)
-                    .FirstOrDefaultAsync();
+                var loginForm = await context.AppUsers.Where(login => login.UserName == txtUsername.Text.ToLower() && login.Password == txtPassword.Text)
+                .FirstOrDefaultAsync();
 
                 if (loginForm != null)
                 {
@@ -105,6 +106,20 @@ namespace PointOfSales2024.Forms
         private void LoginForm_Load(object sender, EventArgs e)
         {
             //updater();
+        }
+        AdminPopup adminpopupForms;
+        private void btnUsers_Click(object sender, EventArgs e)
+        {
+            if(Application.OpenForms.OfType<AdminPopup>().Any())
+            {
+                adminpopupForms.Select();
+                adminpopupForms.BringToFront();
+            }
+            else
+            {
+                adminpopupForms = new AdminPopup();
+                adminpopupForms.ShowDialog();
+            }
         }
     }
 }

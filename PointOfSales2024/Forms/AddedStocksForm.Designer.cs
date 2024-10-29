@@ -267,7 +267,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AddedStocksForm";
             WindowState = FormWindowState.Maximized;
-            Load += AddedStocksForm_Load;
+           // Load += AddedStocksForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgAddedStocks).EndInit();
             ((System.ComponentModel.ISupportInitialize)addedStocksViewModelBindingSource).EndInit();
             groupBox1.ResumeLayout(false);

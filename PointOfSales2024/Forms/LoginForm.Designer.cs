@@ -38,6 +38,7 @@
             label4 = new Label();
             label3 = new Label();
             label5 = new Label();
+            btnUsers = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -140,9 +141,25 @@
             label5.Location = new Point(-1, 175);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(78, 13);
+            label5.Size = new Size(79, 13);
             label5.TabIndex = 0;
-            label5.Text = "Version 1.1.0.0";
+            label5.Text = "Version 1.2.0.0";
+            // 
+            // btnUsers
+            // 
+            btnUsers.BackColor = Color.SteelBlue;
+            btnUsers.FlatAppearance.BorderSize = 0;
+            btnUsers.FlatStyle = FlatStyle.Flat;
+            btnUsers.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnUsers.ForeColor = Color.White;
+            btnUsers.Location = new Point(456, 1);
+            btnUsers.Margin = new Padding(4, 3, 4, 3);
+            btnUsers.Name = "btnUsers";
+            btnUsers.Size = new Size(18, 18);
+            btnUsers.TabIndex = 4;
+            btnUsers.Text = "?";
+            btnUsers.UseVisualStyleBackColor = false;
+            btnUsers.Click += btnUsers_Click;
             // 
             // LoginForm
             // 
@@ -151,6 +168,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(476, 189);
+            Controls.Add(btnUsers);
             Controls.Add(label3);
             Controls.Add(label4);
             Controls.Add(btnLogin);
@@ -187,5 +205,6 @@
         private Label label4;
         private Label label3;
         private Label label5;
+        private Button btnUsers;
     }
 }

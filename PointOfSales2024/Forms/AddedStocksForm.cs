@@ -24,10 +24,6 @@ namespace PointOfSales2024.Forms
 
         }
 
-        private async void AddedStocksForm_Load(object sender, EventArgs e)
-        {
-           // await DisplayAddedStocks();
-        }
 
 
 

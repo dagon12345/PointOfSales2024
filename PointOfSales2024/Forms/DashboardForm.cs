@@ -11,15 +11,16 @@
 
             _Name = name;
             _IsAdmin = IsAdmin;
-            _appUserId = appUserId; 
+            _appUserId = appUserId;
 
             txtName.Text = $"Welcome: {_Name}";
             txtRole.Text = $"Administrator Role: {_IsAdmin}";
 
-
-            if(_IsAdmin != true )
+            //If the user is not admin then hide the two toolstrips
+            if (_IsAdmin != true)
             {
                 registerUsersToolStripMenuItem.Visible = false;
+                usersAndPasswordToolStripMenuItem.Visible = false;
             }
 
         }
@@ -151,6 +152,21 @@
         private void DashboardForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        UsersPasswordForm userPasswordForm;
+        private void usersAndPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Application.OpenForms.OfType<UsersPasswordForm>().Any())
+            {
+                userPasswordForm.Select();
+                userPasswordForm.BringToFront();
+            }
+            else
+            {
+                userPasswordForm = new UsersPasswordForm();
+                userPasswordForm.ShowDialog();
+            }
         }
     }
 }

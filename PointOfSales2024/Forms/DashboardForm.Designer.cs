@@ -44,6 +44,7 @@
             pictureBox1 = new PictureBox();
             menuStrip1 = new MenuStrip();
             registerUsersToolStripMenuItem = new ToolStripMenuItem();
+            usersAndPasswordToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -223,7 +224,7 @@
             // menuStrip1
             // 
             menuStrip1.BackColor = Color.SteelBlue;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { registerUsersToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { registerUsersToolStripMenuItem, usersAndPasswordToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1073, 24);
@@ -238,6 +239,15 @@
             registerUsersToolStripMenuItem.Size = new Size(100, 20);
             registerUsersToolStripMenuItem.Text = "Register Users";
             registerUsersToolStripMenuItem.Click += registerUsersToolStripMenuItem_Click;
+            // 
+            // usersAndPasswordToolStripMenuItem
+            // 
+            usersAndPasswordToolStripMenuItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            usersAndPasswordToolStripMenuItem.ForeColor = Color.White;
+            usersAndPasswordToolStripMenuItem.Name = "usersAndPasswordToolStripMenuItem";
+            usersAndPasswordToolStripMenuItem.Size = new Size(128, 20);
+            usersAndPasswordToolStripMenuItem.Text = "Users and Password";
+            usersAndPasswordToolStripMenuItem.Click += usersAndPasswordToolStripMenuItem_Click;
             // 
             // DashboardForm
             // 
@@ -285,5 +295,6 @@
         private Label label2;
         private Label label1;
         private PictureBox pictureBox1;
+        private ToolStripMenuItem usersAndPasswordToolStripMenuItem;
     }
 }
